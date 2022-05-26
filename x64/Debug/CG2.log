@@ -1,2 +1,7 @@
-﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicPS.cso
-  CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
+﻿  main.cpp
+  Mesh.cpp
+C:\Users\bigsk\source\repos\CG2\Mesh.h(17,12): error C2061: 構文エラー: 識別子 'HRESULT'
+C:\Users\bigsk\source\repos\CG2\Mesh.cpp(35,68): error C2511: 'void Mesh::Init(HRESULT,ID3D12Device *,Mesh [])': オーバーロードされたメンバー関数が 'Mesh' にありません。
+C:\Users\bigsk\source\repos\CG2\Mesh.h(5): message : 'Mesh' の宣言を確認してください
+  コードを生成中...
+C:\Users\bigsk\source\repos\CG2\main.cpp(250): error C4700: 初期化されていないローカル変数 'sizeVB' が使用されます

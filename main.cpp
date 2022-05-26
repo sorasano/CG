@@ -18,6 +18,8 @@ using namespace DirectX;
 
 #include <DirectXTex.h>
 
+#include "Mesh.h"
+
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	// メッセージに応じてゲーム固有の処理を行う
@@ -209,36 +211,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//描画初期化処理　ここから
 
-// 頂点データ構造体
-	struct Vertex
-	{
-		XMFLOAT3 pos; // xyz座標
-		XMFLOAT2 uv;  // uv座標
-	};
+	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
+	D3D12_RESOURCE_DESC resDesc{}; //リソース設定
+	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
+	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
+	ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
+	//D3D12_INPUT_ELEMENT_DESC inputLayout[] = { nullptr };// 頂点レイアウト
+	D3D12_VERTEX_BUFFER_VIEW vbView{};//頂点バッファビューの作成
+	UINT sizeVB;
+
 	// 頂点データ
-	Vertex vertices[] = {
-		// x      y     z       u     v
-		{{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // 左下
-		{{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // 左上
-		{{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // 右下
-		{{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // 右上
+
+	Mesh box1[] = {
+		//x      y     z       u     v
+	   {{-0.4f, -0.7f, 0.0f}, {0.0f, 1.0f}}, // 左下
+	   {{-0.4f, +0.7f, 0.0f}, {0.0f, 0.0f}}, // 左上
+	   {{+0.4f, -0.7f, 0.0f}, {1.0f, 1.0f}}, // 右下
+	   {{+0.4f, +0.7f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
 
+	box1->Init(result, device, box1);
 
-	// インデックスデータ
+	// インデックスデータ 
 	unsigned short indices[] = {
 		0, 1, 2, // 三角形1つ目
 		1, 2, 3, // 三角形2つ目
 	};
 
-	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
+	//// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
+	//UINT sizeVB = static_cast<UINT>(sizeof(box1[0]) * _countof(box1));
 
-	// 頂点バッファの設定
-	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
+	//// 頂点バッファの設定
+	//D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
 	// リソース設定
-	D3D12_RESOURCE_DESC resDesc{};
+	//D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resDesc.Width = sizeVB; // 頂点データ全体のサイズ
 	resDesc.Height = 1;
@@ -258,31 +265,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	Vertex* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	//// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
+	//Mesh* vertMap = nullptr;
+	//result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 
-	assert(SUCCEEDED(result));
-	// 全頂点に対して
-	for (int i = 0; i < _countof(vertices); i++) {
-		vertMap[i] = vertices[i]; // 座標をコピー
-	}
-	// 繋がりを解除
-	vertBuff->Unmap(0, nullptr);
+	//assert(SUCCEEDED(result));
+	//// 全頂点に対して
+	//for (int i = 0; i < _countof(box1); i++) {
+	//	vertMap[i] = box1[i]; // 座標をコピー
+	//}
+	//// 繋がりを解除
+	//vertBuff->Unmap(0, nullptr);
 
-	// 頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	// GPU仮想アドレス
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	// 頂点バッファのサイズ
-	vbView.SizeInBytes = sizeVB;
-	// 頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(vertices[0]);
+	//// 頂点バッファビューの作成
+	//D3D12_VERTEX_BUFFER_VIEW vbView{};
+	//// GPU仮想アドレス
+	//vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	//// 頂点バッファのサイズ
+	//vbView.SizeInBytes = sizeVB;
+	//// 頂点1つ分のデータサイズ
+	//vbView.StrideInBytes = sizeof(box1[0]);
 
 
-	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
+	//ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
+	//ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
+	//ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		L"BasicVS.hlsl", // シェーダファイル名
