@@ -491,6 +491,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
+	//座標変換
+
 	//2D座標変換
 
 	//単位行列を代入
@@ -508,7 +510,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//透視投影行列の計算
 	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(XMConvertToRadians(45.0f), //上下画角45度
 		(float)window_width / window_height,//アスペクト比(画面縦幅/画面縦幅)
-		0.1f,1000.0f);//前端,奥端
+		0.1f, 1000.0f);//前端,奥端
 
 	//ビュー変換行列
 	XMMATRIX matView;
@@ -516,13 +518,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	XMFLOAT3 target(0, 0, 0);
 	XMFLOAT3 up(0, 1, -0);
 	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	float angle = 0.0f; // カメラの回転角
 
-	constMapTransform->mat = matView * matProjection;
+	//ワールド変換行列
+	XMMATRIX matWorld;
+	//単位行列を代入
+	matWorld = XMMatrixIdentity();
+
+	//スケーリング倍率
+	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
+	//回転角
+	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
+	//座標
+	XMFLOAT3 position = { 0.0f,0.0f,0.0f };;
+
+	constMapTransform->mat = matWorld * matView * matProjection;
 
 	// 値を書き込むと自動的に転送される
 	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);              // RGBAで半透明の赤
-
-	float angle = 0.0f; // カメラの回転角
 
 	//画像ファイルの用意
 
@@ -775,18 +788,51 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//更新処理-ここから
 
-		if (key[DIK_D] || key[DIK_A]) {
-			if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
-			else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+		//射影変換
 
-			//angleラジアンだけY軸回りに回転.半径は-100
-			eye.x = -100 * sinf(angle);
-			eye.z = -100 * cosf(angle);
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		//if (key[DIK_D] || key[DIK_A]) {
+		//	if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
+		//	else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+
+		//	//angleラジアンだけY軸回りに回転.半径は-100
+		//	eye.x = -100 * sinf(angle);
+		//	eye.z = -100 * cosf(angle);
+		//	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		//}
+
+		//ワールド変換
+
+		//平行移動更新
+
+		if (key[DIK_UP] || key[DIK_DOWN] || key[DIK_RIGHT] || key[DIK_LEFT]) {
+
+			//座標を移動する処理(Z座標)
+			if (key[DIK_UP]) { position.z += 1.0f; }
+			else if (key[DIK_DOWN]) { position.z -= 1.0f; }
+			if (key[DIK_RIGHT]) { position.x += 1.0f; }
+			else if (key[DIK_LEFT]) { position.x -= 1.0f; }
+
 		}
 
+		XMMATRIX matScale;//スケーリング行列
+		matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+
+		XMMATRIX matRot;//回転行列
+		matRot = XMMatrixIdentity();
+		matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));//Z軸回りに回転
+		matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));//X軸回りに回転
+		matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));//Y軸回りに回転
+
+		XMMATRIX matTrans;//平行移動行列
+		matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+
+		matWorld = XMMatrixIdentity();//変数をリセット
+		matWorld *= matScale;//ワールド行列にスケーリングを反映
+		matWorld *= matRot;//ワールド行列に回転を反映
+		matWorld *= matTrans;//ワールド行列に平行移動を反映
+
 		//定数バッファにデータ転送
-		constMapTransform->mat = matView * matProjection;
+		constMapTransform->mat = matWorld * matView * matProjection;
 
 		//更新処理-ここまで
 
