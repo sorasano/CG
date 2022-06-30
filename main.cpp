@@ -18,6 +18,12 @@ using namespace DirectX;
 
 #include <DirectXTex.h>
 
+#define DIRECTINPUT_VERSION     0x0800   // DirectInputのバージョン指定
+#include <dinput.h>
+
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "dxguid.lib")
+
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	// メッセージに応じてゲーム固有の処理を行う
@@ -205,6 +211,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	UINT64 fenceVal = 0;
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 
+	//キーボード処理
+
+	// DirectInputの初期化
+	IDirectInput8* directInput = nullptr;
+	result = DirectInput8Create(
+		w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	assert(SUCCEEDED(result));
+
+	// キーボードデバイスの生成
+	IDirectInputDevice8* keyboard = nullptr;
+	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	assert(SUCCEEDED(result));
+
+	// 入力データ形式のセット
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
+	assert(SUCCEEDED(result));
+
+	// 排他制御レベルのセット
+	result = keyboard->SetCooperativeLevel(
+		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(result));
+
 	// DirectX初期化処理 ここまで
 
 	//描画初期化処理　ここから
@@ -218,10 +246,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 頂点データ
 	Vertex vertices[] = {
 		// x      y     z       u     v
-		{{-50.0f,-50.0f, 50.0f}, {0.0f, 1.0f}}, // 左下
-		{{-50.0f, 50.0f, 50.0f}, {0.0f, 0.0f}}, // 左上
-		{{50.0f, -50.0f, 50.0f}, {1.0f, 1.0f}}, // 右下
-		{{50.0f, 50.0f, 50.0f}, {1.0f, 0.0f}}, // 右上
+		{{-50.0f,-50.0f, 0.0f}, {0.0f, 1.0f}}, // 左下
+		{{-50.0f, 50.0f, 0.0f}, {0.0f, 0.0f}}, // 左上
+		{{50.0f, -50.0f, 0.0f}, {1.0f, 1.0f}}, // 右下
+		{{50.0f, 50.0f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
 
 
@@ -482,10 +510,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		(float)window_width / window_height,//アスペクト比(画面縦幅/画面縦幅)
 		0.1f,1000.0f);//前端,奥端
 
-	constMapTransform->mat = matProjection;
+	//ビュー変換行列
+	XMMATRIX matView;
+	XMFLOAT3 eye(0, 0, -100);
+	XMFLOAT3 target(0, 0, 0);
+	XMFLOAT3 up(0, 1, -0);
+	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+
+	constMapTransform->mat = matView * matProjection;
 
 	// 値を書き込むと自動的に転送される
 	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);              // RGBAで半透明の赤
+
+	float angle = 0.0f; // カメラの回転角
 
 	//画像ファイルの用意
 
@@ -729,6 +766,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		// DirectX毎フレーム処理 ここから
 
+		// キーボード情報の取得開始
+		keyboard->Acquire();
+
+		// 全キーの入力状態を取得する
+		BYTE key[256] = {};
+		keyboard->GetDeviceState(sizeof(key), key);
+
+		//更新処理-ここから
+
+		if (key[DIK_D] || key[DIK_A]) {
+			if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
+			else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+
+			//angleラジアンだけY軸回りに回転.半径は-100
+			eye.x = -100 * sinf(angle);
+			eye.z = -100 * cosf(angle);
+			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
+
+		//定数バッファにデータ転送
+		constMapTransform->mat = matView * matProjection;
+
+		//更新処理-ここまで
+
 		// バックバッファの番号を取得（2つなので0番か1番）
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 
@@ -740,7 +801,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		commandList->ResourceBarrier(1, &barrierDesc);
 
 		// ２．描画先の変更
-	// レンダーターゲットビューのハンドルを取得
+		// レンダーターゲットビューのハンドルを取得
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeap->GetCPUDescriptorHandleForHeapStart();
 		rtvHandle.ptr += bbIndex * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
 		commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
