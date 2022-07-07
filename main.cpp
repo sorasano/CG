@@ -273,14 +273,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dsvHeapDesc.NumDescriptors = 1;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	ID3D12DescriptorHeap* dsvHeap = nullptr;
-	result = device->CreateDescriptorHeap(&dsvHeapDesc,IID_PPV_ARGS(&dsvHeap));
+	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
 	//深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = { };
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	device->CreateDepthStencilView(
-	depthBuff,
+		depthBuff,
 		&dsvDesc,
 		dsvHeap->GetCPUDescriptorHandleForHeapStart()
 	);
@@ -289,46 +289,48 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	struct Vertex
 	{
 		XMFLOAT3 pos; // xyz座標
+		XMFLOAT3 normal; //法線ベクトル
 		XMFLOAT2 uv;  // uv座標
 	};
 	// 頂点データ
 	Vertex vertices[] = {
-		// x      y     z       u     v
+		// x      y     z     法線  u     v
 		//前
-		{{-5.0f,-5.0f, -5.0f}, {0.0f, 1.0f}}, // 左下
-		{{-5.0f, 5.0f, -5.0f}, {0.0f, 0.0f}}, // 左上
-		{{5.0f, -5.0f, -5.0f}, {1.0f, 1.0f}}, // 右下
-		{{5.0f, 5.0f, -5.0f}, {1.0f, 0.0f}}, // 右上
-		// x      y     z       u     v
+		{{-5.0f,-5.0f, -5.0f}, {}, {0.0f, 1.0f}}, // 左下
+		{{-5.0f, 5.0f, -5.0f},{}, {0.0f, 0.0f}}, // 左上
+		{{5.0f, -5.0f, -5.0f}, {},{1.0f, 1.0f}}, // 右下
+		{{5.0f, 5.0f, -5.0f},{}, {1.0f, 0.0f}}, // 右上
+
 		//後
-		{{-5.0f,-5.0f, 5.0f}, {0.0f, 1.0f}}, // 左下
-		{{-5.0f, 5.0f, 5.0f}, {0.0f, 0.0f}}, // 左上
-		{{5.0f, -5.0f, 5.0f}, {1.0f, 1.0f}}, // 右下
-		{{5.0f, 5.0f,  5.0f}, {1.0f, 0.0f}}, // 右上
-		// x      y     z       u     v
+		{{-5.0f, 5.0f, 5.0f},{}, {0.0f, 0.0f}}, // 左上
+		{{-5.0f,-5.0f, 5.0f}, {},{0.0f, 1.0f}}, // 左下
+		{{5.0f, 5.0f,  5.0f}, {},{1.0f, 0.0f}}, // 右上
+		{{5.0f, -5.0f, 5.0f}, {},{1.0f, 1.0f}}, // 右下
+
 		//左
-		{{-5.0f,-5.0f, -5.0f}, {0.0f, 1.0f}}, // 左下
-		{{-5.0f, -5.0f, 5.0f}, {0.0f, 0.0f}}, // 左上
-		{{-5.0f, 5.0f, -5.0f}, {1.0f, 1.0f}}, // 右下
-		{{-5.0f, 5.0f, 5.0f}, {1.0f, 0.0f}}, // 右上
-		// x      y     z       u     v
+		{{-5.0f,-5.0f, -5.0f},{}, {0.0f, 1.0f}}, // 左下
+		{{-5.0f, -5.0f, 5.0f}, {},{0.0f, 0.0f}}, // 左上
+		{{-5.0f, 5.0f, -5.0f},{}, {1.0f, 1.0f}}, // 右下
+		{{-5.0f, 5.0f, 5.0f}, {},{1.0f, 0.0f}}, // 右上
+
 		//右
-		{{5.0f,-5.0f, -5.0f}, {0.0f, 1.0f}}, // 左下
-		{{5.0f, -5.0f, 5.0f}, {0.0f, 0.0f}}, // 左上
-		{{5.0f, 5.0f, -5.0f}, {1.0f, 1.0f}}, // 右下
-		{{5.0f, 5.0f, 5.0f}, {1.0f, 0.0f}}, // 右上
-		// x      y     z       u     v
+		{{5.0f, -5.0f, 5.0f}, {},{0.0f, 0.0f}}, // 左上
+		{{5.0f,-5.0f, -5.0f}, {},{0.0f, 1.0f}}, // 左下
+		{{5.0f, 5.0f, 5.0f}, {},{1.0f, 0.0f}}, // 右上
+		{{5.0f, 5.0f, -5.0f},{}, {1.0f, 1.0f}}, // 右下
+
 		//下
-		{{-5.0f,-5.0f, -5.0f}, {0.0f, 1.0f}}, // 左下
-		{{-5.0f, -5.0f, 5.0f}, {0.0f, 0.0f}}, // 左上
-		{{5.0f, -5.0f, -5.0f}, {1.0f, 1.0f}}, // 右下
-		{{5.0f, -5.0f, 5.0f}, {1.0f, 0.0f}}, // 右上
-		// x      y     z       u     v
+		{{-5.0f,-5.0f, -5.0f}, {},{0.0f, 1.0f}}, // 左下
+		{{-5.0f, -5.0f, 5.0f}, {},{0.0f, 0.0f}}, // 左上
+		{{5.0f, -5.0f, -5.0f},{}, {1.0f, 1.0f}}, // 右下
+		{{5.0f, -5.0f, 5.0f}, {},{1.0f, 0.0f}}, // 右上
+	
 		//上
-		{{-5.0f,5.0f, -5.0f}, {0.0f, 1.0f}}, // 左下
-		{{-5.0f, 5.0f, 5.0f}, {0.0f, 0.0f}}, // 左上
-		{{5.0f, 5.0f, -5.0f}, {1.0f, 1.0f}}, // 右下
-		{{5.0f, 5.0f, 5.0f}, {1.0f, 0.0f}}, // 右上
+		{{-5.0f, 5.0f, 5.0f},{}, {0.0f, 0.0f}}, // 左上
+		{{-5.0f,5.0f, -5.0f}, {},{0.0f, 1.0f}}, // 左下
+		{{5.0f, 5.0f, 5.0f}, {},{1.0f, 0.0f}}, // 右上
+		{{5.0f, 5.0f, -5.0f},{}, {1.0f, 1.0f}}, // 右下
+
 	};
 
 
@@ -336,22 +338,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	unsigned short indices[] = {
 		//前
 		0, 1, 2, // 三角形1つ目
-		1, 2, 3, // 三角形2つ目
+		2, 1, 3, // 三角形2つ目
 		//後
 		4,5,6,
-		5,6,7,
+		6,5,7,
 		//左
 		 8,9,10,
-		 9,10,11,
+		 10,9,11,
 		 //右
 		 12,13,14,
-		 13,14,15,
+		 14,13,15,
 		 //下
 		 16,17,18,
-		 17,18,19,
+		 18,17,19,
 		 //上
 		 20,21,22,
-		 21,22,23
+		 22,21,23
 	};
 
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
@@ -463,6 +465,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
+		{//法線ベクトル
+			"NOMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+
 		{ // uv座標(1行で書いたほうが見やすい)
 			"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -783,10 +791,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;           //ピクセルシェーダからのみ使用可能
 
-
-
-
-
 	// グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
@@ -800,7 +804,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 
 	// ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;  // カリングしない
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;  // カリングしない
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
@@ -958,7 +962,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// ３．画面クリア           R     G     B    A
 		FLOAT clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-		commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH,1.0f,0,0, nullptr);
+		commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 		// ４．描画コマンドここから
 
