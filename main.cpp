@@ -588,10 +588,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial); // マッピング
 	assert(SUCCEEDED(result));
 
-	//3D変換行列
+	//0番定数バッファを作成
 
-	ID3D12Resource* constBuffTransform = nullptr;
-	ConstBufferDataTransform* constMapTransform = nullptr;
+	ID3D12Resource* constBuffTransform0 = nullptr;
+	ConstBufferDataTransform* constMapTransform0 = nullptr;
 
 	{
 		// ヒープ設定
@@ -614,10 +614,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			&cbResourceDesc, // リソース設定
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&constBuffTransform));
+			IID_PPV_ARGS(&constBuffTransform0));
 		assert(SUCCEEDED(result));
 
-		result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform); // マッピング
+		result = constBuffTransform0->Map(0, nullptr, (void**)&constMapTransform0); // マッピング
+		assert(SUCCEEDED(result));
+
+	}
+
+	//1番3定数バッファを作成
+
+	ID3D12Resource* constBuffTransform1 = nullptr;
+	ConstBufferDataTransform* constMapTransform1 = nullptr;
+
+	{
+
+		// 定数バッファの生成
+		result = device->CreateCommittedResource(
+			&cbHeapProp, // ヒープ設定
+			D3D12_HEAP_FLAG_NONE,
+			&cbResourceDesc, // リソース設定
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			IID_PPV_ARGS(&constBuffTransform1));
+		assert(SUCCEEDED(result));
+
+		result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1); // マッピング
 		assert(SUCCEEDED(result));
 
 	}
@@ -652,18 +674,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float angle = 0.0f; // カメラの回転角
 
 	//ワールド変換行列
-	XMMATRIX matWorld;
+	XMMATRIX matWorld0;
 	//単位行列を代入
-	matWorld = XMMatrixIdentity();
+	matWorld0= XMMatrixIdentity();
 
 	//スケーリング倍率
-	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
+	XMFLOAT3 scale0 = { 1.0f,1.0f,1.0f };
 	//回転角
-	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 rotation0 = { 0.0f,0.0f,0.0f };
 	//座標
-	XMFLOAT3 position = { 0.0f,0.0f,0.0f };;
+	XMFLOAT3 position0 = { 0.0f,0.0f,0.0f };;
 
-	constMapTransform->mat = matWorld * matView * matProjection;
+	constMapTransform0->mat = matWorld0 * matView * matProjection;
+
 
 	// 値を書き込むと自動的に転送される
 	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);              // RGBAで半透明の赤
@@ -940,32 +963,48 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (key[DIK_UP] || key[DIK_DOWN] || key[DIK_RIGHT] || key[DIK_LEFT]) {
 
 			//座標を移動する処理(Z座標)
-			if (key[DIK_UP]) { position.z += 1.0f; }
-			else if (key[DIK_DOWN]) { position.z -= 1.0f; }
-			if (key[DIK_RIGHT]) { position.x += 1.0f; }
-			else if (key[DIK_LEFT]) { position.x -= 1.0f; }
+			if (key[DIK_UP]) { position0.z += 1.0f; }
+			else if (key[DIK_DOWN]) { position0.z -= 1.0f; }
+			if (key[DIK_RIGHT]) { position0.x += 1.0f; }
+			else if (key[DIK_LEFT]) { position0.x -= 1.0f; }
 
 		}
 
 		XMMATRIX matScale;//スケーリング行列
-		matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+		matScale = XMMatrixScaling(scale0.x, scale0.y, scale0.z);
 
 		XMMATRIX matRot;//回転行列
 		matRot = XMMatrixIdentity();
-		matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));//Z軸回りに回転
-		matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));//X軸回りに回転
-		matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));//Y軸回りに回転
+		matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation0.z));//Z軸回りに回転
+		matRot *= XMMatrixRotationX(XMConvertToRadians(rotation0.x));//X軸回りに回転
+		matRot *= XMMatrixRotationY(XMConvertToRadians(rotation0.y));//Y軸回りに回転
 
 		XMMATRIX matTrans;//平行移動行列
-		matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+		matTrans = XMMatrixTranslation(position0.x, position0.y, position0.z);
 
-		matWorld = XMMatrixIdentity();//変数をリセット
-		matWorld *= matScale;//ワールド行列にスケーリングを反映
-		matWorld *= matRot;//ワールド行列に回転を反映
-		matWorld *= matTrans;//ワールド行列に平行移動を反映
+		matWorld0 = XMMatrixIdentity();//変数をリセット
+		matWorld0 *= matScale;//ワールド行列にスケーリングを反映
+		matWorld0*= matRot;//ワールド行列に回転を反映
+		matWorld0 *= matTrans;//ワールド行列に平行移動を反映
 
 		//定数バッファにデータ転送
-		constMapTransform->mat = matWorld * matView * matProjection;
+		constMapTransform0->mat = matWorld0 * matView * matProjection;
+
+		//ワールド変換行列 1
+		XMMATRIX matWorld1;
+		//単位行列を代入
+		matWorld1 = XMMatrixIdentity();
+
+		//スケーリング倍率
+		XMMATRIX scale1 = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+		//回転角
+		XMMATRIX rotation1 = XMMatrixRotationY(XM_PI / 4.0f);
+		//座標
+		XMMATRIX position1 = XMMatrixTranslation(-20.0f, 0, 0);
+
+		matWorld1 = scale1 * rotation1 * position1;
+
+		constMapTransform1->mat = matWorld1 * matView * matProjection;
 
 		//更新処理-ここまで
 
@@ -1037,11 +1076,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// インデックスバッファビューの設定コマンド
 		commandList->IASetIndexBuffer(&ibView);
 
-		//定数バッファビュー(CBV)の設定コマンド
-		commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+		//0番定数バッファビュー(CBV)の設定コマンド
+		commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform0->GetGPUVirtualAddress());
 
 		// 描画コマンド
 		commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+
+		//1番定数バッファビュー(CBV)の設定コマンド
+		commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform1->GetGPUVirtualAddress());
+
+		// 描画コマンド
+		commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+
 
 		// ４．描画コマンドここまで
 
