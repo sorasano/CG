@@ -247,7 +247,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vertex vertices[] = {
 		// x      y     z       u     v
 		{{-50.0f,-50.0f, 0.0f}, {0.0f, 1.0f}}, // 左下
-		{{-50.0f, 50.0f, 0.0f}, {0.0f, 0.0f}}, // 左上
+		//{{-50.0f, 50.0f, 0.0f}, {0.0f, 0.0f}}, // 左上
 		{{50.0f, -50.0f, 0.0f}, {1.0f, 1.0f}}, // 右下
 		{{50.0f, 50.0f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
@@ -790,15 +790,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//射影変換
 
-		//if (key[DIK_D] || key[DIK_A]) {
-		//	if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
-		//	else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+		if (key[DIK_D] || key[DIK_A]) {
+			if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
+			else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
 
-		//	//angleラジアンだけY軸回りに回転.半径は-100
-		//	eye.x = -100 * sinf(angle);
-		//	eye.z = -100 * cosf(angle);
-		//	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		//}
+			//angleラジアンだけY軸回りに回転.半径は-100
+			eye.x = -100 * sinf(angle);
+			eye.z = -100 * cosf(angle);
+			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
 
 		//ワールド変換
 
