@@ -246,10 +246,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 頂点データ
 	Vertex vertices[] = {
 		// x      y     z       u     v
-		{{-50.0f,-50.0f, 0.0f}, {0.0f, 1.0f}}, // 左下
-		//{{-50.0f, 50.0f, 0.0f}, {0.0f, 0.0f}}, // 左上
-		{{50.0f, -50.0f, 0.0f}, {1.0f, 1.0f}}, // 右下
-		{{50.0f, 50.0f, 0.0f}, {1.0f, 0.0f}}, // 右上
+		{{-30.0f,-30.0f, 0.0f}, {0.0f, 1.0f}}, // 左下
+		{{30.0f, -30.0f, 0.0f}, {1.0f, 1.0f}}, // 右下
+		{{30.0f, 30.0f, 0.0f}, {1.0f, 0.0f}}, // 右上
 	};
 
 
@@ -424,7 +423,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// 定数バッファ用データ構造体（3D変換行列）
 	struct ConstBufferDataTransform {
-		XMMATRIX mat; // 色 (RGBA)
+		XMMATRIX mat; // 座標
 	};
 
 	// ヒープ設定
@@ -535,7 +534,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	constMapTransform->mat = matWorld * matView * matProjection;
 
 	// 値を書き込むと自動的に転送される
-	constMapMaterial->color = XMFLOAT4(1, 1, 1, 0.5f);              // RGBAで半透明の赤
+	constMapMaterial->color = XMFLOAT4(0, 0, 0, 1);              // RGBAで半透明の赤
 
 	//画像ファイルの用意
 
@@ -713,15 +712,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; // RBGA全てのチャンネルを描画
 
-	//blenddesc.BlendEnable = true;                   // ブレンドを有効にする
-	//blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;    // 加算
-	//blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;      // ソースの値を100% 使う
-	//blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;    // デストの値を  0% 使う
+	blenddesc.BlendEnable = true;                   // ブレンドを有効にする
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;    // 加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;      // ソースの値を100% 使う
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;    // デストの値を  0% 使う
 
-	//// 半透明合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;             // 加算
-	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;         // ソースのアルファ値
-	//blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;    // 1.0f-ソースのアルファ値
+	//加算合成
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;             // 加算
+	blenddesc.SrcBlend = D3D12_BLEND_ONE;         // ソースのアルファ値
+	blenddesc.DestBlend = D3D12_BLEND_ONE;    // 1.0f-ソースのアルファ値
 
 	// 頂点レイアウトの設定
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
@@ -833,6 +832,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//定数バッファにデータ転送
 		constMapTransform->mat = matWorld * matView * matProjection;
+
+		//色を変える
+
+		if (constMapMaterial->color.x < 1) {
+			constMapMaterial->color.x += 0.001;
+		}
+		else {
+			constMapMaterial->color.x = 0;
+		}
+
+		if (constMapMaterial->color.y < 1) {
+			constMapMaterial->color.y += 0.0015;
+		}
+		else {
+			constMapMaterial->color.y = 0;
+		}
+		if (constMapMaterial->color.z < 1) {
+			constMapMaterial->color.z += 0.002;
+		}
+		else {
+			constMapMaterial->color.z = 0;
+		}
 
 		//更新処理-ここまで
 

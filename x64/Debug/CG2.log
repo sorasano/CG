@@ -1,2 +1,5 @@
 ﻿  main.cpp
+C:\Users\bigsk\source\repos\CG2\main.cpp(840,38): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+C:\Users\bigsk\source\repos\CG2\main.cpp(847,39): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+C:\Users\bigsk\source\repos\CG2\main.cpp(853,38): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
