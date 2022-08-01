@@ -28,6 +28,10 @@ using namespace DirectX;
 
 using namespace Microsoft::WRL;
 
+#include <iostream>
+#include <memory>
+using namespace std;
+
 // 定数バッファ用データ構造体（マテリアル）
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color; // 色 (RGBA)
@@ -258,13 +262,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//キーボード処理
 
 	// DirectInputの初期化
-	IDirectInput8* directInput = nullptr;
+	ComPtr<IDirectInput8> directInput;
 	result = DirectInput8Create(
 		w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
 	// キーボードデバイスの生成
-	IDirectInputDevice8* keyboard = nullptr;
+	ComPtr<IDirectInputDevice8> keyboard;
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	assert(SUCCEEDED(result));
 
@@ -476,9 +480,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 
-	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
-	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
-	ID3DBlob* errorBlob = nullptr; // エラーオブジェクト
+	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob; // ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
+
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		L"BasicVS.hlsl", // シェーダファイル名
@@ -741,6 +746,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		assert(SUCCEEDED(result));
 	}
 
+	//// 元データ解放
+	//delete metadata;
+
 	//2枚目
 
 	TexMetadata metadata2{};
@@ -800,9 +808,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		);
 		assert(SUCCEEDED(result));
 	}
-
-	//// 元データ解放
-	//delete[] imageData;
 
 	// SRVの最大個数
 	const size_t kMaxSRVCount = 2056;
@@ -985,6 +990,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	BYTE oldkey[256] = {};
 
 
+	
 	// ゲームループ
 	while (true) {
 		// メッセージがある?

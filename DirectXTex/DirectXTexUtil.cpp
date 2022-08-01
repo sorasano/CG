@@ -73,9 +73,9 @@ namespace
     bool g_WIC2 = false;
     IWICImagingFactory* g_Factory = nullptr;
 
-    BOOL WINAPI InitializeWICFactory(PINIT_ONCE, PVOID, PVOID *ifactory) noexcept
+    BOOL WINAPI InitializeWICFactory(PINIT_ONCE, PVOID, PVOID* ifactory) noexcept
     {
-    #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
         HRESULT hr = CoCreateInstance(
             CLSID_WICImagingFactory2,
             nullptr,
@@ -103,7 +103,7 @@ namespace
             );
             return SUCCEEDED(hr) ? TRUE : FALSE;
         }
-    #else
+#else
         g_WIC2 = false;
 
         return SUCCEEDED(CoCreateInstance(
@@ -112,17 +112,17 @@ namespace
             CLSCTX_INPROC_SERVER,
             __uuidof(IWICImagingFactory),
             ifactory)) ? TRUE : FALSE;
-    #endif
+#endif
     }
 
 #else // !WIN32
-    inline void * _aligned_malloc(size_t size, size_t alignment)
+    inline void* _aligned_malloc(size_t size, size_t alignment)
     {
         size = (size + alignment - 1) & ~(alignment - 1);
         return std::aligned_alloc(alignment, size);
     }
 
-    #define _aligned_free free
+#define _aligned_free free
 #endif
 }
 
@@ -157,56 +157,56 @@ bool DirectX::Internal::DXGIToWIC(DXGI_FORMAT format, GUID& guid, bool ignoreRGB
 {
     switch (format)
     {
-        case DXGI_FORMAT_R8G8B8A8_UNORM:
-        case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
-            if (ignoreRGBvsBGR)
-            {
-                // If we are not doing conversion so don't really care about BGR vs RGB color-order,
-                // we can use the canonical WIC 32bppBGRA format which avoids an extra format conversion when using the WIC scaler
-                memcpy(&guid, &GUID_WICPixelFormat32bppBGRA, sizeof(GUID));
-            }
-            else
-            {
-                memcpy(&guid, &GUID_WICPixelFormat32bppRGBA, sizeof(GUID));
-            }
-            return true;
-
-        case DXGI_FORMAT_D32_FLOAT:
-            memcpy(&guid, &GUID_WICPixelFormat32bppGrayFloat, sizeof(GUID));
-            return true;
-
-        case DXGI_FORMAT_D16_UNORM:
-            memcpy(&guid, &GUID_WICPixelFormat16bppGray, sizeof(GUID));
-            return true;
-
-        case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+    case DXGI_FORMAT_R8G8B8A8_UNORM:
+    case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+        if (ignoreRGBvsBGR)
+        {
+            // If we are not doing conversion so don't really care about BGR vs RGB color-order,
+            // we can use the canonical WIC 32bppBGRA format which avoids an extra format conversion when using the WIC scaler
             memcpy(&guid, &GUID_WICPixelFormat32bppBGRA, sizeof(GUID));
-            return true;
+        }
+        else
+        {
+            memcpy(&guid, &GUID_WICPixelFormat32bppRGBA, sizeof(GUID));
+        }
+        return true;
 
-        case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
-            memcpy(&guid, &GUID_WICPixelFormat32bppBGR, sizeof(GUID));
-            return true;
+    case DXGI_FORMAT_D32_FLOAT:
+        memcpy(&guid, &GUID_WICPixelFormat32bppGrayFloat, sizeof(GUID));
+        return true;
 
-        #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
-        case DXGI_FORMAT_R32G32B32_FLOAT:
-            if (g_WIC2)
+    case DXGI_FORMAT_D16_UNORM:
+        memcpy(&guid, &GUID_WICPixelFormat16bppGray, sizeof(GUID));
+        return true;
+
+    case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+        memcpy(&guid, &GUID_WICPixelFormat32bppBGRA, sizeof(GUID));
+        return true;
+
+    case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
+        memcpy(&guid, &GUID_WICPixelFormat32bppBGR, sizeof(GUID));
+        return true;
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
+    case DXGI_FORMAT_R32G32B32_FLOAT:
+        if (g_WIC2)
+        {
+            memcpy(&guid, &GUID_WICPixelFormat96bppRGBFloat, sizeof(GUID));
+            return true;
+        }
+        break;
+#endif
+
+    default:
+        for (size_t i = 0; i < std::size(g_WICFormats); ++i)
+        {
+            if (g_WICFormats[i].format == format)
             {
-                memcpy(&guid, &GUID_WICPixelFormat96bppRGBFloat, sizeof(GUID));
+                memcpy(&guid, &g_WICFormats[i].wic, sizeof(GUID));
                 return true;
             }
-            break;
-        #endif
-
-        default:
-            for (size_t i = 0; i < std::size(g_WICFormats); ++i)
-            {
-                if (g_WICFormats[i].format == format)
-                {
-                    memcpy(&guid, &g_WICFormats[i].wic, sizeof(GUID));
-                    return true;
-                }
-            }
-            break;
+        }
+        break;
     }
 
     memset(&guid, 0, sizeof(GUID));
@@ -1411,7 +1411,7 @@ size_t TexMetadata::ComputeIndex(size_t mip, size_t item, size_t slice) const no
         if (item >= arraySize)
             return size_t(-1);
 
-        return (item*(mipLevels)+mip);
+        return (item * (mipLevels)+mip);
 
     case TEX_DIMENSION_TEXTURE3D:
         if (item > 0)
@@ -1519,7 +1519,7 @@ HRESULT Blob::Resize(size_t size) noexcept
     if (!m_buffer || !m_size)
         return E_UNEXPECTED;
 
-    void *tbuffer = _aligned_malloc(size, 16);
+    void* tbuffer = _aligned_malloc(size, 16);
     if (!tbuffer)
         return E_OUTOFMEMORY;
 
