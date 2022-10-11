@@ -18,11 +18,7 @@ using namespace DirectX;
 
 #include <DirectXTex.h>
 
-#define DIRECTINPUT_VERSION     0x0800   // DirectInputのバージョン指定
-#include <dinput.h>
-
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+#include "Input.h"
 
 #include <wrl.h>
 
@@ -81,7 +77,7 @@ LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 
 
 //windowsアプリでのエントリーポイント(main関数)
-int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// ウィンドウサイズ
 	const int window_width = 1280; // 横幅
@@ -213,7 +209,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 	swapChainDesc.BufferCount = 2; // バッファ数を2つに設定
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD; // フリップ後は破棄
 	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-	
+
 	//IDXGISwapChain1のComPtrを用意
 	ComPtr<IDXGISwapChain1> swapchain1;
 
@@ -259,27 +255,17 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 	UINT64 fenceVal = 0;
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 
-	//キーボード処理
+	////キーボード処理
 
-	// DirectInputの初期化
-	ComPtr<IDirectInput8> directInput;
-	result = DirectInput8Create(
-		w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
-	assert(SUCCEEDED(result));
+	//ポインタ
+	Input* input = nullptr;
 
-	// キーボードデバイスの生成
-	ComPtr<IDirectInputDevice8> keyboard;
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
-	assert(SUCCEEDED(result));
+	//入力の初期化
+	input = new Input();
+	input->Initialize(w.hInstance,hwnd);
 
-	// 入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
-	assert(SUCCEEDED(result));
-
-	// 排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(
-		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
+	////入力開放
+	//delete input;
 
 	// DirectX初期化処理 ここまで
 
@@ -486,7 +472,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"BasicVS.hlsl", // シェーダファイル名
+		L"Resources/shaders/BasicVS.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -511,7 +497,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"BasicPS.hlsl",   // シェーダファイル名
+		L"Resources/shaders/BasicPS.hlsl",   // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -986,11 +972,6 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 
 	//描画初期化処理　ここまで
 
-	BYTE key[256] = {};
-	BYTE oldkey[256] = {};
-
-
-	
 	// ゲームループ
 	while (true) {
 		// メッセージがある?
@@ -1004,24 +985,15 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 		}
 		// DirectX毎フレーム処理 ここから
 
-		// キーボード情報の取得開始
-		keyboard->Acquire();
-
-		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
-		for (int i = 0; i < 256; i++) {
-			oldkey[i] = key[i];
-		}
-
-		// 全キーの入力状態を取得する
-		keyboard->GetDeviceState(sizeof(key), key);
+		input->Update();
 
 		//更新処理-ここから
 
 		//射影変換
 
-		if (key[DIK_D] || key[DIK_A]) {
-			if (key[DIK_D]) { angle += XMConvertToRadians(1.0f); }
-			else if (key[DIK_A]) { angle -= XMConvertToRadians(1.0f); }
+		if (input->PushKey(DIK_D) || input->PushKey(DIK_A)) {
+			if (input->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+			else if (input->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
 			//angleラジアンだけY軸回りに回転.半径は-100
 			eye.x = -100 * sinf(angle);
@@ -1033,13 +1005,13 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 
 		//平行移動更新
 
-		if (key[DIK_UP] || key[DIK_DOWN] || key[DIK_RIGHT] || key[DIK_LEFT]) {
+		if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT)) {
 
 			//座標を移動する処理(Z座標)
-			if (key[DIK_UP]) { object3ds[0].position.y += 1.0f; }
-			else if (key[DIK_DOWN]) { object3ds[0].position.y -= 1.0f; }
-			if (key[DIK_RIGHT]) { object3ds[0].position.x += 1.0f; }
-			else if (key[DIK_LEFT]) { object3ds[0].position.x -= 1.0f; }
+			if (input->PushKey(DIK_UP)) { object3ds[0].position.y += 1.0f; }
+			else if (input->PushKey(DIK_DOWN)) { object3ds[0].position.y -= 1.0f; }
+			if (input->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
+			else if (input->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
 
 		}
 
@@ -1049,7 +1021,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR, _In_ int) {
 		}
 
 
-		if (key[DIK_SPACE] == 0x80 &&  oldkey[DIK_SPACE] == 0x00) {
+		if (input->TriggerKey(DIK_SPACE)) {
 			if (incrementSize != 0) {
 				incrementSize = 0;
 			}
