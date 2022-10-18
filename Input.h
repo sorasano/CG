@@ -12,6 +12,7 @@ using namespace Microsoft::WRL;
 #pragma comment(lib, "dxguid.lib")
 
 #include <Windows.h>
+#include "WinApp.h"
 
 class Input
 {
@@ -22,7 +23,7 @@ public:
 
 public:
 
-	void Initialize(HINSTANCE hInstance, HWND hwnd);
+	void Initialize(WinApp* winApp);
 
 	void Update();
 
@@ -40,5 +41,7 @@ private:
 	BYTE key[256] = {};
 	BYTE keyPre[256] = {};
 
+	//WindowsAPI
+	WinApp* winApp_ = nullptr;
 };
 
