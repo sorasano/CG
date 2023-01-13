@@ -7,10 +7,22 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\ObjPixel.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\ObjVertex.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicPS.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpritePS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpriteVS.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
