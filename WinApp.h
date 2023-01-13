@@ -3,6 +3,10 @@
 
 using namespace Microsoft::WRL;
 
+// ウィンドウサイズ
+static const int window_width = 1280; // 横幅
+static const int window_height = 720; // 縦幅
+
 class WinApp
 {
 public:
@@ -23,15 +27,12 @@ public:
 	HWND GetHwnd() const { return hwnd; }
 
 	HINSTANCE GetHInstance() const { return w.hInstance; }
-private:
+public:
 	//ウィンドウハンドル
 	HWND hwnd = nullptr;
 
 	// ウィンドウクラスの設定
 	WNDCLASSEX w{};
-public:
-	// ウィンドウサイズ
-	static const int window_width = 1280; // 横幅
-	static const int window_height = 720; // 縦幅
+
 };
 

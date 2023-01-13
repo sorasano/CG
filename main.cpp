@@ -31,6 +31,8 @@ using namespace std;
 #include "WinApp.h"
 #include "DirectXCommon.h"
 
+#include "DirectXCommon.h"
+
 // 定数バッファ用データ構造体（マテリアル）
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color; // 色 (RGBA)
@@ -123,6 +125,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//描画初期化処理　ここから
 
+	HRESULT result;
+	ID3D12GraphicsCommandList* commandList;
 
 	//深度バッファ
 
@@ -459,7 +463,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//透視投影行列の計算
 	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(XMConvertToRadians(45.0f), //上下画角45度
-		(float)winApp->window_width / winApp->window_height,//アスペクト比(画面縦幅/画面縦幅)
+		(float)window_width / window_height,//アスペクト比(画面縦幅/画面縦幅)
 		0.1f, 1000.0f);//前端,奥端
 
 	//ビュー変換行列
@@ -809,22 +813,22 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//ワールド変換
 
-		////平行移動更新
+		//平行移動更新
 
-		//if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT)) {
+		if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT)) {
 
-		//	//座標を移動する処理(Z座標)
-		//	if (input->PushKey(DIK_UP)) { object3ds[0].position.y += 1.0f; }
-		//	else if (input->PushKey(DIK_DOWN)) { object3ds[0].position.y -= 1.0f; }
-		//	if (input->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
-		//	else if (input->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
+			//座標を移動する処理(Z座標)
+			if (input->PushKey(DIK_UP)) { object3ds[0].position.y += 1.0f; }
+			else if (input->PushKey(DIK_DOWN)) { object3ds[0].position.y -= 1.0f; }
+			if (input->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
+			else if (input->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
 
-		//}
+		}
 
 
-		//for (size_t i = 0; i < _countof(object3ds); i++) {
-		//	UpdateObject3d(&object3ds[i], matView, matProjection);
-		//}
+		for (size_t i = 0; i < _countof(object3ds); i++) {
+			UpdateObject3d(&object3ds[i], matView, matProjection);
+		}
 
 
 		//if (input->TriggerKey(DIK_SPACE)) {
@@ -837,44 +841,46 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//}
 
 
-		////更新処理-ここまで
+		//更新処理-ここまで
 
-		////描画前処理
-		//dxCommon->PreDraw();
+		//描画前処理
+		dxCommon->PreDraw();
 
-		//// パイプラインステートとルートシグネチャの設定コマンド
-		//commandList->SetPipelineState(pipelineState.Get());
-		//commandList->SetGraphicsRootSignature(rootSignature.Get());
+		commandList = dxCommon->GetCommandList();
 
-		//// プリミティブ形状の設定コマンド
-		//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
+		// パイプラインステートとルートシグネチャの設定コマンド
+		commandList->SetPipelineState(pipelineState.Get());
+		commandList->SetGraphicsRootSignature(rootSignature.Get());
 
-		//// 頂点バッファビューの設定コマンド
-		//commandList->IASetVertexBuffers(0, 1, &vbView);
+		// プリミティブ形状の設定コマンド
+		commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
 
-		//// 定数バッファビュー(CBV)の設定コマンド
-		//commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
-		//// SRVヒープの設定コマンド
-		//commandList->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
+		// 頂点バッファビューの設定コマンド
+		commandList->IASetVertexBuffers(0, 1, &vbView);
 
-		//// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
-		//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
-		//// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
-		////commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+		// 定数バッファビュー(CBV)の設定コマンド
+		commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+		// SRVヒープの設定コマンド
+		commandList->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
 
-		//srvGpuHandle.ptr += incrementSize;
+		// SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
+		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+		// SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
 		//commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-		//// インデックスバッファビューの設定コマンド
-		//commandList->IASetIndexBuffer(&ibView);
+		srvGpuHandle.ptr += incrementSize;
+		commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-		//for (int i = 0; i < _countof(object3ds); i++) {
-		//	DrawObject3d(&object3ds[i], commandList, vbView, ibView, _countof(indices));
-		//}
+		// インデックスバッファビューの設定コマンド
+		commandList->IASetIndexBuffer(&ibView);
 
-		//// ４．描画コマンドここまで
+		for (int i = 0; i < _countof(object3ds); i++) {
+			DrawObject3d(&object3ds[i], commandList, vbView, ibView, _countof(indices));
+		}
 
-		//dxCommon->PostDraw();
+		// ４．描画コマンドここまで
+
+		dxCommon->PostDraw();
 
 		// DirectX毎フレーム処理 ここまで
 

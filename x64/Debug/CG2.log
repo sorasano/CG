@@ -1,4 +1,2 @@
-﻿  DirectXCommon.cpp
-  main.cpp
-  コードを生成中...
-C:\Users\bigsk\source\repos\CG2\main.cpp(107): error C4700: 初期化されていないローカル変数 'result' が使用されます
+﻿  main.cpp
+  CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
