@@ -1,6 +1,39 @@
-﻿  main.cpp
+﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjPixel.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjVertex.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicVS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpritePS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpriteVS.cso
+  DirectXCommon.cpp
+  Input.cpp
+  WinApp.cpp
+  Enemy.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Enemy.cpp(33,22): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  GameScene.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\GameScene.h(89,8): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\bigsk\source\repos\CG2\GameScene.h(96,8): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\bigsk\source\repos\CG2\GameScene.cpp(90,39): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\GameScene.cpp(133,21): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  main.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\GameScene.h(89,8): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+C:\Users\bigsk\source\repos\CG2\GameScene.h(96,8): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+  Model.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.cpp(21,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
+  object3D.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Player.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  PlayerBullet.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Sprite.cpp
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,70): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,56): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   コード生成しています。
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-  All 389 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Previous IPDB was built with incompatible compiler, fall back to full compilation.
+  All 1030 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Release\CG2.exe

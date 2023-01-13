@@ -58,3 +58,4 @@ void Player::setScale(XMFLOAT3 sca)
 {
 	scale_ = sca;
 }
+

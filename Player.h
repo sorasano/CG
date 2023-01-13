@@ -20,6 +20,7 @@ public:
 	void setPosition(XMFLOAT3 pos);
 	void setRotation(XMFLOAT3 rot);
 	void setScale(XMFLOAT3 sca);
+	bool Attack();
 private:
 	DirectXCommon* dx_ = nullptr;
 	Model* model_ = nullptr;
@@ -30,5 +31,10 @@ private:
 	XMFLOAT3 position_ = { 0,0,0 };
 	//ワールド変換行列
 	XMMATRIX matWorld;
+
+
+	//弾のタイマー
+	int bulletTimer_ = 4;
+
 };
 
