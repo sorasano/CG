@@ -18,6 +18,7 @@ public:
 	{
 		XMFLOAT3 pos; // xyz座標
 		XMFLOAT3 normal; // 法線ベクトル
+		XMFLOAT4 color;
 		XMFLOAT2 uv;  // uv座標
 	};
 
@@ -90,6 +91,7 @@ private:
 		XMFLOAT3 pos;	//座標
 		XMFLOAT3 normalize;	//法線ベクトル
 		XMFLOAT2 uv;	//uv座標
+		XMFLOAT4 color = {1,0,0,1};
 		Vertex* parent = nullptr;
 	};
 

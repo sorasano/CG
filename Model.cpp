@@ -516,3 +516,5 @@ void Model::LoadTexture(const std::string& resourcename)
 		cpuDescHandleSRV
 	);
 }
+
+
