@@ -46,6 +46,8 @@ using namespace std;
 #include <sstream>
 #include <iomanip>
 
+static double PI = 3.14159265359;
+
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	// メッセージに応じてゲーム固有の処理を行う
@@ -119,10 +121,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	std::unique_ptr<Model> sphereModel_;
 	std::unique_ptr<Sphere> sphere_;
 
-	std::unique_ptr<Model> sphereRedModel_;
-	std::unique_ptr<Sphere> sphereRed_;
-
-
 	//球オブジェクトのモデル初期化
 	Model* newSphereModel = new Model();
 	newSphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/white1×1.png");
@@ -133,7 +131,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	newSphere->Initialize(dxCommon, sphereModel_.get());
 	sphere_.reset(newSphere);
 
-
+	std::unique_ptr<Model> sphereRedModel_;
+	std::unique_ptr<Sphere> sphereRed_;
 
 	//球オブジェクトのモデル初期化
 	Model* newSphereRedModel = new Model();
@@ -147,38 +146,38 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//---------地面-----------
 
-	//地面オブジェクト
-	std::unique_ptr<Model> planeModel_;
-	std::unique_ptr<Plane> plane_;
+	////地面オブジェクト
+	//std::unique_ptr<Model> planeModel_;
+	//std::unique_ptr<Plane> plane_;
 
-	//地面オブジェクトのモデル初期化
-	Model* newPlaneModel = new Model();
-	newPlaneModel->Initialize(dxCommon, "plane", "Resources/plane/white1×1.png");
-	planeModel_.reset(newPlaneModel);
+	////地面オブジェクトのモデル初期化
+	//Model* newPlaneModel = new Model();
+	//newPlaneModel->Initialize(dxCommon, "plane", "Resources/plane/white1×1.png");
+	//planeModel_.reset(newPlaneModel);
 
-	//地面オブジェクト初期化
-	Plane* newPlane = new Plane();
-	newPlane->Initialize(dxCommon,planeModel_.get());
-	plane_.reset(newPlane);
+	////地面オブジェクト初期化
+	//Plane* newPlane = new Plane();
+	//newPlane->Initialize(dxCommon,planeModel_.get());
+	//plane_.reset(newPlane);
 
 
 	//------------プレイヤー----------
 
 	//プレイヤーのモデル
-	std::unique_ptr<Model> playerModel_;
+	//std::unique_ptr<Model> playerModel_;
 
-	//プレイヤー
-	std::unique_ptr<Player> player_;
+	////プレイヤー
+	//std::unique_ptr<Player> player_;
 
-	//プレイヤーのモデル初期化
-	Model* newModel = new Model();
-	newModel->Initialize(dxCommon, "Player", "Resources/Player/blue.png");
-	playerModel_.reset(newModel);
+	////プレイヤーのモデル初期化
+	//Model* newModel = new Model();
+	//newModel->Initialize(dxCommon, "Player", "Resources/Player/blue.png");
+	//playerModel_.reset(newModel);
 
-	//プレイヤー初期化
-	Player* newPlayer = new Player();
-	newPlayer->Initialize(dxCommon, playerModel_.get());
-	player_.reset(newPlayer);
+	////プレイヤー初期化
+	//Player* newPlayer = new Player();
+	//newPlayer->Initialize(dxCommon, playerModel_.get());
+	//player_.reset(newPlayer);
 
 	//当たり判定
 
@@ -193,7 +192,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//ビュー変換行列
 	XMMATRIX matView;
-	XMFLOAT3 eye = { -10, 1, 50 };
+	XMFLOAT3 eye = { -10, 10, -50 };
 	XMFLOAT3 target = { 0, 0, 0 };
 	XMFLOAT3 up = { 0, 1, 0 };
 	//カメラ初期化
@@ -213,9 +212,57 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//アフィン変換情報
 	XMFLOAT3 scale_ = { 1,1,1 };
 	XMFLOAT3 rotation_ = { 0,0,0 };
-	XMFLOAT3 position_ = { 0,10,0 };
+	XMFLOAT3 position_ = { 0,1,0 };
 
 	bool state = 0;
+
+	//----スプライト----
+
+
+	//スプライト
+	Sprite* sprite_ = new Sprite;
+	//スプライト共通データ生成
+	SpriteCommon spriteCommon_;
+
+	//スプライト共通データ生成
+	spriteCommon_ = sprite_->SpriteCommonCreate(dxCommon->GetDevice(), 1280, 720);
+
+	//スプライトテクスチャ読み込み
+	sprite_->SpriteCommonLoadTexture(spriteCommon_, 0, L"Resources/texture.jpg", dxCommon->GetDevice());
+	sprite_->SpriteCommonLoadTexture(spriteCommon_, 1, L"Resources/reimu.png", dxCommon->GetDevice());
+
+	//スプライトの生成
+	Sprite testSprite1_;
+	testSprite1_ = testSprite1_.SpriteCreate(dxCommon->GetDevice(), 64, 64);
+
+	//テクスチャ番号セット
+	testSprite1_.SetTexNumber(0);
+	//テクスチャサイズ設定
+	testSprite1_.SetScale(XMFLOAT2(128, 128));
+	//ポジション変更と更新
+	testSprite1_.SetPosition(XMFLOAT3(0, 0, 0));
+	testSprite1_.SpriteUpdate(testSprite1_,spriteCommon_);
+	//反映
+	testSprite1_.SpriteTransferVertexBuffer(testSprite1_);
+
+
+	//スプライトの生成
+	Sprite testSprite2_;
+	testSprite2_ = testSprite2_.SpriteCreate(dxCommon->GetDevice(),64, 64);
+
+	//テクスチャ番号セット
+	testSprite2_.SetTexNumber(1);
+	//テクスチャサイズ設定
+	testSprite2_.SetScale(XMFLOAT2(64, 64));
+	//ポジション変更と更新
+	testSprite2_.SetPosition(XMFLOAT3(600,0,0));
+	testSprite2_.SpriteUpdate(testSprite2_, spriteCommon_);
+	//反映
+	testSprite2_.SpriteTransferVertexBuffer(testSprite2_);
+
+	//スプライト用パイプライン生成呼び出し
+	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline(dxCommon->GetDevice());
+
 
 	//描画初期化処理　ここまで
 
@@ -240,7 +287,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 			//angleラジアンだけY軸回りに回転.半径は-100
 			eye.x = -10 * sinf(angle);
-			//eye.z = -10 * cosf(angle);
+			eye.z = -10 * cosf(angle);
 			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 
 		}
@@ -268,58 +315,43 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		}
 
-		//自動移動
-		if (state == false) {
-			position_.y -= 0.1f;
-
-			if (position_.y <= -5) {
-				state = true;
-			}
-
-		}
-		else {
-			position_.y += 0.1f;
-
-			if (position_.y >= +5) {
-				state = false;
-			}
-		}
-
 		input->Update();
 
 		sphere_->setPosition(position_);
+		sphere_->setRotation(XMFLOAT3(0, 0, 0));
+	/*	sphere_->setScale(XMFLOAT3(1, 100, 100));*/
+
+
 		sphere_->Update(matView, matProjection);
 
-		sphereRed_->setPosition(position_);
+		sphereRed_->setPosition(XMFLOAT3(position_.x + 3, position_.y, position_.z));
 		sphereRed_->Update(matView, matProjection);
 
-		plane_->Update(matView, matProjection);
+		//plane_->Update(matView, matProjection);
 
 		sphere_->sphereCol.center = XMVECTOR{sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1};
 
-		hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
+		//hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 		
 		//更新処理-ここまで
 
 		//描画前処理
 		dxCommon->PreDraw();
 
-		if (hit) {
-			sphereRed_->Draw();
-		}
-		else {
-			sphere_->Draw();
-		}
+		sphere_->Draw();
+		sphereRed_->Draw();
 
-		plane_->Draw();
+		//plane_->Draw();
 
-		////スプライト描画
-		////スプライト共通コマンド
-		//sprite_->SpriteCommonBeginDraw(dxCommon->GetCommandList(), spriteCommon_);
+		//スプライト描画
+		//スプライト共通コマンド
+		sprite_->SpriteCommonBeginDraw(dxCommon->GetCommandList(), spriteCommon_);
 
-		//titleSprite_.SpriteDraw(dxCommon->GetCommandList(), titleSprite_, spriteCommon_, dxCommon->GetDevice());
+		testSprite1_.SpriteDraw(dxCommon->GetCommandList(),testSprite1_, spriteCommon_, dxCommon->GetDevice());
 
-		//commandList = dxCommon->GetCommandList();
+		testSprite2_.SpriteDraw(dxCommon->GetCommandList(), testSprite2_, spriteCommon_, dxCommon->GetDevice());
+
+		commandList = dxCommon->GetCommandList();
 
 
 		// ４．描画コマンドここまで

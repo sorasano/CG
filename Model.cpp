@@ -7,6 +7,8 @@
 #include "sstream"
 #include "vector"
 
+#include <xstring>
+
 #pragma comment(lib, "d3dcompiler.lib")
 
 Model* Model::GetInstance()
@@ -20,28 +22,34 @@ void Model::Initialize(DirectXCommon* dx_, const std::string& filename, const st
 	dx = dx_;
 	HRESULT result;
 
-	//頂点初期化
-	InitializeVertex(filename);
 	//デスクリプタ初期化
 	InitializeDesc();
+
 	//シェーダ読み込み
 	CompileShader(L"ObjVertex.hlsl", L"ObjPixel.hlsl");
-	//テクスチャ読み込み
+
+	//頂点初期化
+	InitializeVertex(filename);
+
+
+	////テクスチャ読み込み
 	LoadTexture(resourcename);
+	
+
 }
 
-void Model::InitializeVertex(const std::string& filename)
+void Model::InitializeVertex(const std::string& modelname)
 {
 	HRESULT result;
 	//ファイルストリーム
 	std::ifstream file;
-	const std::string modelname = filename;
-	const std::string filename2 = modelname + ".obj";
+	//const std::string modelname = modelname;
+	const std::string filename = modelname + ".obj";
 	const std::string directoryPath = "Resources/" + modelname + "/";
 	//objファイルを開く
-	file.open(directoryPath + filename2);
+	file.open(directoryPath + filename);
 	assert(!file.fail());
-	
+
 	//ファイル読み込み
 	std::vector<XMFLOAT3>positions;	//頂点座標
 	std::vector<XMFLOAT3>normals;	//法線ベクトル
@@ -58,7 +66,7 @@ void Model::InitializeVertex(const std::string& filename)
 		getline(line_stream, key, ' ');
 
 		//マテリアル
-		if (key == "material")
+		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
 			std::string filename;
@@ -435,7 +443,7 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		if (key == "map_Kd")
 		{
 			line_stream >> material.textureFilename;
-			/*LoadTexture(directoryPath, material.textureFilename);*/
+			LoadTexture(directoryPath);
 		}
 	}
 	//ファイルを閉じる
@@ -448,16 +456,20 @@ void Model::LoadTexture(const std::string& resourcename)
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
+	ScratchImage mipChain{};
+
+	//ファイルパスを結合
+	//std::string filePath = directoryPath + resourcename;
 
 	//ユニコード文字列に変換する
 	wchar_t wfilepath[128];
 	int iBufferSize = MultiByteToWideChar(CP_ACP, 0,
 		resourcename.c_str(), -1, wfilepath, _countof(wfilepath));
 
+
 	// WICテクスチャのロード
 	result = LoadFromWICFile(wfilepath, WIC_FLAGS_NONE, &metadata, scratchImg);
 
-	ScratchImage mipChain{};
 	// ミップマップ生成
 	result = GenerateMipMaps(
 		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
@@ -515,6 +527,9 @@ void Model::LoadTexture(const std::string& resourcename)
 		&srvDesc, //テクスチャ設定情報
 		cpuDescHandleSRV
 	);
+
+	textureIndex = 0;
+
 }
 
 

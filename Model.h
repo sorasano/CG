@@ -84,6 +84,8 @@ public:
 
 	D3D12_INDEX_BUFFER_VIEW ibView;
 	D3D12_VERTEX_BUFFER_VIEW vbView;		//頂点バッファビュー
+	uint32_t textureIndex = 0;	//テクスチャ番号
+
 private:
 	//頂点データ構造体
 	struct Vertex

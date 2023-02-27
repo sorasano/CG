@@ -169,8 +169,12 @@ void Object3D::Draw(D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ib
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 	cmdList->SetGraphicsRootConstantBufferView(1, constBuffB1->GetGPUVirtualAddress());
+	
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = model->GetSrv();
+	UINT incrementSize = dx->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	srvGpuHandle.ptr += incrementSize * model->textureIndex;
 	// シェーダリソースビューをセット
-	cmdList->SetGraphicsRootDescriptorTable(2, model->GetSrv());
+	cmdList->SetGraphicsRootDescriptorTable(2, srvGpuHandle);
 	// 描画コマンド
 	cmdList->DrawIndexedInstanced(model->GetIndicesSize(), 1, 0, 0, 0);
 }

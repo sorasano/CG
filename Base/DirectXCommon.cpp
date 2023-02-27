@@ -281,7 +281,7 @@ void DirectXCommon::PreDraw()
 	GetCommandList()->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 3. 画面クリアコマンド   R     G    B    A
-	FLOAT clearColor[] = { 0.0f,0.0f,0.01f,0.0f };
+	FLOAT clearColor[] = { 0.1f,0.1f,0.2f,0.0f };
 	GetCommandList()->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
