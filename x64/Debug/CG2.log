@@ -1,7 +1,30 @@
-﻿  main.cpp
+﻿  DirectXCommon.cpp
+  Input.cpp
+  WinApp.cpp
+  Collision.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  CollisionPrimitive.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Model.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.cpp(23,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
+  Plane.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Player.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Sphere.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Sprite.cpp
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,70): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,56): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  main.cpp
 C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
 C:\Users\bigsk\source\repos\CG2\main.cpp(296,16): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
 C:\Users\bigsk\source\repos\CG2\main.cpp(300,16): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
 C:\Users\bigsk\source\repos\CG2\main.cpp(110,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
 C:\Users\bigsk\source\repos\CG2\main.cpp(191,7): warning C4101: 'hit': ローカル変数は 1 度も使われていません。
+  object3D.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
