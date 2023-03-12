@@ -23,6 +23,15 @@
 //};
 
 
+class Triangle {
+public:
+	DirectX::XMVECTOR p0;
+	DirectX::XMVECTOR p1;
+	DirectX::XMVECTOR p2;
+
+	DirectX::XMVECTOR normal;
+};
+
 class CollisionPrimitive
 {
 

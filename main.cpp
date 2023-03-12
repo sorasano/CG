@@ -46,6 +46,8 @@ using namespace std;
 #include <sstream>
 #include <iomanip>
 
+#include "Camera.h"
+
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	// メッセージに応じてゲーム固有の処理を行う
@@ -125,7 +127,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//球オブジェクトのモデル初期化
 	Model* newSphereModel = new Model();
-	newSphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/white1×1.png");
+	newSphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/texture.jpg");
 	sphereModel_.reset(newSphereModel);
 	
 	//球オブジェクト初期化
@@ -162,24 +164,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	plane_.reset(newPlane);
 
 
-	//------------プレイヤー----------
-
-	//プレイヤーのモデル
-	std::unique_ptr<Model> playerModel_;
-
-	//プレイヤー
-	std::unique_ptr<Player> player_;
-
-	//プレイヤーのモデル初期化
-	Model* newModel = new Model();
-	newModel->Initialize(dxCommon, "Player", "Resources/Player/blue.png");
-	playerModel_.reset(newModel);
-
-	//プレイヤー初期化
-	Player* newPlayer = new Player();
-	newPlayer->Initialize(dxCommon, playerModel_.get());
-	player_.reset(newPlayer);
-
 	//当たり判定
 
 	////球
@@ -188,27 +172,29 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	////平面
 
+	//三角形
+	Triangle triangle;
+	triangle.p0 = XMVectorSet(-1.0f,0,-1.0f,1);
+	triangle.p1 = XMVectorSet(-1.0f, 0, +1.0f, 1);
+	triangle.p2 = XMVectorSet(+1.0f, 0, -1.0f, 1);
+	triangle.normal = XMVectorSet(0.0f,1.0f,0.0f,0);
 
-	bool hit;
+	bool SphereToPlaneHit;
+
+	bool SphereToTriangleHit;
+
 
 	//ビュー変換行列
-	XMMATRIX matView;
 	XMFLOAT3 eye = { -10, 1, 50 };
 	XMFLOAT3 target = { 0, 0, 0 };
 	XMFLOAT3 up = { 0, 1, 0 };
+
+	//カメラ
 	//カメラ初期化
-	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-
-	//射影変換
-	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(45.0f),			//上下画角45度
-		(float)window_width / window_height,//アスペクト比(画面横幅/画面立幅)
-		0.1f, 1000.0f						//前端、奥端
-	);
-
-	float angle = 0.0f; // カメラの回転角
-
+	Camera *camera{};	
+	camera = new Camera;
+	camera->StaticInitialize(dxCommon->GetDevice());
+	camera->Initialize(eye, target, up,input);
 
 	//アフィン変換情報
 	XMFLOAT3 scale_ = { 1,1,1 };
@@ -232,41 +218,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//更新処理-ここから
 
-		//射影変換
-
-		if (input->PushKey(DIK_D) || input->PushKey(DIK_A)) {
-			if (input->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-			else if (input->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
-
-			//angleラジアンだけY軸回りに回転.半径は-100
-			eye.x = -10 * sinf(angle);
-			//eye.z = -10 * cosf(angle);
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-		}
-
-		if (input->PushKey(DIK_W)) {
-			eye.y += 0.1;
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		}		
-		if (input->PushKey(DIK_S)) {
-			eye.y -= 0.1;
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		}
-
-		//ワールド変換
-
-		//平行移動更新
-
-		if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT)) {
-
-			//座標を移動する処理(Z座標)
-			if (input->PushKey(DIK_UP)) { position_.y += 0.1f; }
-			else if (input->PushKey(DIK_DOWN)) { position_.y -= 0.1f; }
-			if (input->PushKey(DIK_RIGHT)) { position_.x -= 0.1f; }
-			else if (input->PushKey(DIK_LEFT)) { position_.x += 0.1f; }
-
-		}
 
 		//自動移動
 		if (state == false) {
@@ -285,42 +236,43 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			}
 		}
 
+		//入力更新
 		input->Update();
 
+		//球更新
 		sphere_->setPosition(position_);
-		sphere_->Update(matView, matProjection);
+		sphere_->Update(camera->matView, camera->matProjection);
 
 		sphereRed_->setPosition(position_);
-		sphereRed_->Update(matView, matProjection);
+		sphereRed_->Update(camera->matView, camera->matProjection);
 
-		plane_->Update(matView, matProjection);
+		plane_->Update(camera->matView, camera->matProjection);
 
+		//当たり判定
 		sphere_->sphereCol.center = XMVECTOR{sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1};
 
-		hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
+		SphereToPlaneHit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 		
+		SphereToTriangleHit = Collision::CheckSphere2Triangle(sphere_->sphereCol,triangle);
+
+		//カメラ更新
+		camera->Update();
+
 		//更新処理-ここまで
 
 		//描画前処理
 		dxCommon->PreDraw();
 
-		if (hit) {
+		//球
+		if (SphereToPlaneHit) {
 			sphereRed_->Draw();
 		}
 		else {
 			sphere_->Draw();
 		}
 
+		//地面
 		plane_->Draw();
-
-		////スプライト描画
-		////スプライト共通コマンド
-		//sprite_->SpriteCommonBeginDraw(dxCommon->GetCommandList(), spriteCommon_);
-
-		//titleSprite_.SpriteDraw(dxCommon->GetCommandList(), titleSprite_, spriteCommon_, dxCommon->GetDevice());
-
-		//commandList = dxCommon->GetCommandList();
-
 
 		// ４．描画コマンドここまで
 

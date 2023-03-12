@@ -23,6 +23,9 @@ public:
 
 public:
 
+	//インスタンスアクセス専用関数
+	static Input* GetInstance();
+
 	void Initialize(WinApp* winApp);
 
 	void Update();

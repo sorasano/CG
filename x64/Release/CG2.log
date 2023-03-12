@@ -1,20 +1,11 @@
-﻿  Collision.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  CollisionPrimitive.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Plane.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Sphere.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+﻿  Input.cpp
   main.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-C:\Users\bigsk\source\repos\CG2\main.cpp(266,16): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-C:\Users\bigsk\source\repos\CG2\main.cpp(270,16): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
-C:\Users\bigsk\source\repos\CG2\main.cpp(108,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
-C:\Users\bigsk\source\repos\CG2\main.cpp(109,29): warning C4101: 'commandList': ローカル変数は 1 度も使われていません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\main.cpp(110,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
+C:\Users\bigsk\source\repos\CG2\main.cpp(111,29): warning C4101: 'commandList': ローカル変数は 1 度も使われていません。
   コード生成しています。
-  38 of 1227 functions ( 3.1%) were compiled, the rest were copied from previous compilation.
-    4 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  3 of 1202 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Release\CG2.exe
