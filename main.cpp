@@ -47,6 +47,7 @@ using namespace std;
 #include <iomanip>
 
 #include "Camera.h"
+#include "ParticleManager.h"
 
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
@@ -183,6 +184,74 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	bool SphereToTriangleHit;
 
+	//パーティクル1
+
+	// パーティクル静的初期化
+	ParticleManager::StaticInitialize(dxCommon, WinApp::winW, WinApp::winH);
+
+
+	ParticleManager* particle1 = new ParticleManager();
+	//パーティクル生成
+	particle1 = ParticleManager::Create(dxCommon, "Resources/effect1.png");
+
+	for (int i = 0; i < 100; i++) {
+		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+		const float md_pos = 10.0f;
+		XMFLOAT3 pos{};
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+		const float md_vel = 0.1f;
+		XMFLOAT3 vel{};
+		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		XMFLOAT3 acc{};
+		const float md_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+		//追加
+		particle1->Add(600, pos, vel, acc);
+	}
+
+	particle1->Update();
+
+	//パーティクル2
+
+	ParticleManager* particle2 = new ParticleManager();
+	//パーティクル生成
+	particle2 = ParticleManager::Create(dxCommon, "Resources/effect2.png");
+
+	for (int i = 0; i < 100; i++) {
+		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+		const float md_pos = 10.0f;
+		XMFLOAT3 pos{};
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+		const float md_vel = 0.1f;
+		XMFLOAT3 vel{};
+		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		XMFLOAT3 acc{};
+		const float md_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+		//追加
+		particle2->Add(600, pos, vel, acc);
+	}
+
+	particle2->Update();
+
 
 	//ビュー変換行列
 	XMFLOAT3 eye = { -10, 1, 50 };
@@ -255,6 +324,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		
 		SphereToTriangleHit = Collision::CheckSphere2Triangle(sphere_->sphereCol,triangle);
 
+		//パーティクル
+		particle1->Update();
+		particle2->Update();
+
+
 		//カメラ更新
 		camera->Update();
 
@@ -263,16 +337,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//描画前処理
 		dxCommon->PreDraw();
 
-		//球
-		if (SphereToPlaneHit) {
-			sphereRed_->Draw();
-		}
-		else {
-			sphere_->Draw();
-		}
+		////球
+		//if (SphereToPlaneHit) {
+		//	sphereRed_->Draw();
+		//}
+		//else {
+		//	sphere_->Draw();
+		//}
 
 		//地面
-		plane_->Draw();
+		//plane_->Draw();
+
+		//パーティクル
+		particle1->Draw();
+		particle2->Draw();
+
 
 		// ４．描画コマンドここまで
 
