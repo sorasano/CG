@@ -10,33 +10,33 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const float ParticleManager::radius = 5.0f;				// 底面の半径
-const float ParticleManager::prizmHeight = 8.0f;			// 柱の高さ
+//const float ParticleManager::radius = 5.0f;				// 底面の半径
+//const float ParticleManager::prizmHeight = 8.0f;			// 柱の高さ
 ID3D12Device* ParticleManager::device = nullptr;
 UINT ParticleManager::descriptorHandleIncrementSize = 0;
-ID3D12GraphicsCommandList* ParticleManager::cmdList = nullptr;
+//ID3D12GraphicsCommandList* ParticleManager::cmdList = nullptr;
 ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
 ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
 ComPtr<ID3D12DescriptorHeap> ParticleManager::descHeap;
 ComPtr<ID3D12Resource> ParticleManager::vertBuff;
-//ComPtr<ID3D12Resource> ParticleManager::indexBuff;
-ComPtr<ID3D12Resource> ParticleManager::texbuff;
-CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager::cpuDescHandleSRV;
-CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager::gpuDescHandleSRV;
+////ComPtr<ID3D12Resource> ParticleManager::indexBuff;
+//ComPtr<ID3D12Resource> ParticleManager::texbuff;
+//CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleManager::cpuDescHandleSRV;
+//CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleManager::gpuDescHandleSRV;
 XMMATRIX ParticleManager::matView{};
 XMMATRIX ParticleManager::matProjection{};
 XMFLOAT3 ParticleManager::eye = { 0, 0, -5.0f };
 XMFLOAT3 ParticleManager::target = { 0, 0, 0 };
 XMFLOAT3 ParticleManager::up = { 0, 1, 0 };
 D3D12_VERTEX_BUFFER_VIEW ParticleManager::vbView{};
-D3D12_INDEX_BUFFER_VIEW ParticleManager::ibView{};
+//D3D12_INDEX_BUFFER_VIEW ParticleManager::ibView{};
 ParticleManager::VertexPos ParticleManager::vertices[vertexCount];
 XMMATRIX ParticleManager::matBillbord = XMMatrixIdentity();
 XMMATRIX ParticleManager::matBillbordY = XMMatrixIdentity();
-
-//unsigned short ParticleManager::indices[planeCount * 3];
-
-//unsigned short ParticleManager::indices[indexCount];
+//
+////unsigned short ParticleManager::indices[planeCount * 3];
+//
+////unsigned short ParticleManager::indices[indexCount];
 DirectXCommon* ParticleManager::dx = nullptr;
 
 //XMFLOAt3同士の加算処理
@@ -48,12 +48,20 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 	return result;
 }
 
+ParticleManager::ParticleManager()
+{
+}
+
+ParticleManager::~ParticleManager()
+{
+}
+
 void ParticleManager::StaticInitialize(DirectXCommon* dx, int window_width, int window_height)
 {
 	// nullptrチェック
 	assert(dx);
-	ParticleManager::dx = dx;
 
+	ParticleManager::dx = dx;
 	ParticleManager::device = dx->GetDevice();
 
 	// デスクリプタヒープの初期化
@@ -95,28 +103,28 @@ void ParticleManager::PostDraw()
 	ParticleManager::cmdList = nullptr;
 }
 
-ParticleManager* ParticleManager::Create(DirectXCommon* dx_, const std::string& resourcename)
-{
-
-	device = dx_->GetDevice();
-
-	// 3Dオブジェクトのインスタンスを生成
-	ParticleManager* particleManager = new ParticleManager();
-	if (particleManager == nullptr) {
-		return nullptr;
-	}
-	
-	LoadTexture(resourcename);
-
-	// 初期化
-	if (!particleManager->Initialize()) {
-		delete particleManager;
-		assert(0);
-		return nullptr;
-	}
-
-	return particleManager;
-}
+//ParticleManager* ParticleManager::Create(DirectXCommon* dx_, const std::string& resourcename)
+//{
+//
+//	device = dx_->GetDevice();
+//
+//	// 3Dオブジェクトのインスタンスを生成
+//	ParticleManager* particleManager = new ParticleManager();
+//	if (particleManager == nullptr) {
+//		return nullptr;
+//	}
+//	
+//	LoadTexture(resourcename);
+//
+//	// 初期化
+//	if (!particleManager->Initialize()) {
+//		delete particleManager;
+//		assert(0);
+//		return nullptr;
+//	}
+//
+//	return particleManager;
+//}
 
 void ParticleManager::SetEye(XMFLOAT3 eye)
 {
@@ -608,8 +616,10 @@ void ParticleManager::UpdateViewMatrix()
 
 }
 
-bool ParticleManager::Initialize()
+bool ParticleManager::Initialize(const std::string& resourcename)
 {
+
+	LoadTexture(resourcename);
 
 	// nullptrチェック
 	assert(device);

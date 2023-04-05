@@ -54,132 +54,138 @@ public: // サブクラス
 	};
 
 private: // 定数
-	static const int division = 50;					// 分割数
-	static const float radius;				// 底面の半径
-	static const float prizmHeight;			// 柱の高さ
-	static const int planeCount = division * 2 + division * 2;		// 面の数
+	 const int division = 50;					// 分割数
+	 const float radius = 5.0f;				// 底面の半径
+	 const float prizmHeight= 8.0f;			// 柱の高さ
+	 const int planeCount = division * 2 + division * 2;		// 面の数
 
-	static const int vertexCount = 1024;		// 頂点数
+	 static const int vertexCount = 1024;		// 頂点数
 
 public: // 静的メンバ関数
+
+
+	ParticleManager();
+
+	~ParticleManager();
+
 	/// <summary>
 	/// 静的初期化
 	/// </summary>
 	/// <param name="device">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(DirectXCommon* dx, int window_width, int window_height);
+	 static void StaticInitialize(DirectXCommon* dx, int window_width, int window_height);
 
 	/// <summary>
 	/// 描画前処理
 	/// </summary>
 	/// <param name="cmdList">描画コマンドリスト</param>
-	static void PreDraw(ID3D12GraphicsCommandList* cmdList);
+	 void PreDraw(ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
 	/// 描画後処理
 	/// </summary>
-	static void PostDraw();
+	 void PostDraw();
 
 	/// <summary>
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns></returns>
-	static ParticleManager* Create(DirectXCommon* dx_, const std::string& resourcename);
+	 ParticleManager* Create(DirectXCommon* dx_, const std::string& resourcename);
 
 	/// <summary>
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetEye() { return eye; }
+	 const XMFLOAT3& GetEye() { return eye; }
 
 	/// <summary>
 	/// 視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetEye(XMFLOAT3 eye);
+	 void SetEye(XMFLOAT3 eye);
 
 	/// <summary>
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetTarget() { return target; }
+	 const XMFLOAT3& GetTarget() { return target; }
 
 	/// <summary>
 	/// 注視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetTarget(XMFLOAT3 target);
+	 void SetTarget(XMFLOAT3 target);
 
 	/// <summary>
 	/// ベクトルによる移動
 	/// </summary>
 	/// <param name="move">移動量</param>
-	static void CameraMoveVector(XMFLOAT3 move);
+	 void CameraMoveVector(XMFLOAT3 move);
 
-	static void CameraMoveEyeVector(XMFLOAT3 move);
+	 void CameraMoveEyeVector(XMFLOAT3 move);
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	 static ID3D12Device* device;
 	// デスクリプタサイズ
-	static UINT descriptorHandleIncrementSize;
+	 static UINT descriptorHandleIncrementSize;
 	// コマンドリスト
-	static ID3D12GraphicsCommandList* cmdList;
+	 ID3D12GraphicsCommandList* cmdList;
 	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	 static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	 static ComPtr<ID3D12PipelineState> pipelinestate;
 	// デスクリプタヒープ
-	static ComPtr<ID3D12DescriptorHeap> descHeap;
+	 static ComPtr<ID3D12DescriptorHeap> descHeap;
 	// 頂点バッファ
-	static ComPtr<ID3D12Resource> vertBuff;
+	 static ComPtr<ID3D12Resource> vertBuff;
 	//// インデックスバッファ
-	//static ComPtr<ID3D12Resource> indexBuff;
+	// ComPtr<ID3D12Resource> indexBuff;
 	//// テクスチャバッファ
-	//static ComPtr<ID3D12Resource> texbuff;
+	// ComPtr<ID3D12Resource> texbuff;
 	// シェーダリソースビューのハンドル(CPU)
-	static CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	 CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
 	// シェーダリソースビューのハンドル(CPU)
-	static CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	 CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
 	// ビュー行列
-	static XMMATRIX matView;
+	 static XMMATRIX matView;
 	// 射影行列
-	static XMMATRIX matProjection;
+	 static XMMATRIX matProjection;
 	// 視点座標
-	static XMFLOAT3 eye;
+	 static XMFLOAT3 eye;
 	// 注視点座標
-	static XMFLOAT3 target;
+	 static XMFLOAT3 target;
 	// 上方向ベクトル
-	static XMFLOAT3 up;
+	 static XMFLOAT3 up;
 	// 頂点バッファビュー
 	static D3D12_VERTEX_BUFFER_VIEW vbView;
 	// インデックスバッファビュー
-	static D3D12_INDEX_BUFFER_VIEW ibView;
+	 D3D12_INDEX_BUFFER_VIEW ibView;
 	// 頂点データ配列
-	static VertexPos vertices[vertexCount];
+	 static VertexPos vertices[vertexCount];
 	//// 頂点インデックス配列
-	//static unsigned short indices[indexCount];
+	// unsigned short indices[indexCount];
 
 	//ビューボード行列
-	static XMMATRIX matBillbord;
+	 static XMMATRIX matBillbord;
 	//Y軸周りのビューボード行列
-	static XMMATRIX matBillbordY;
+	 static XMMATRIX matBillbordY;
 
-	static DirectXCommon* dx;
+	 static DirectXCommon* dx;
 
 private:// 静的メンバ関数
 	/// <summary>
 	/// デスクリプタヒープの初期化
 	/// </summary>
-	static void InitializeDescriptorHeap();
+	 static void InitializeDescriptorHeap();
 
 	/// <summary>
 	/// カメラ初期化
 	/// </summary>
 	/// <param name="window_width">画面横幅</param>
 	/// <param name="window_height">画面縦幅</param>
-	static void InitializeCamera(int window_width, int window_height);
+	 static void InitializeCamera(int window_width, int window_height);
 
 	/// <summary>
 	/// グラフィックパイプライン生成
@@ -190,22 +196,22 @@ private:// 静的メンバ関数
 	/// <summary>
 	/// テクスチャ読み込み
 	/// </summary>
-	static void LoadTexture();
+	 void LoadTexture();
 
-	static void LoadTexture(const std::string& resourcename);
+	 void LoadTexture(const std::string& resourcename);
 
 	/// <summary>
 	/// モデル作成
 	/// </summary>
-	static void CreateModel();
+	 static void CreateModel();
 
 	/// <summary>
 	/// ビュー行列を更新
 	/// </summary>
-	static void UpdateViewMatrix();
+	 static void UpdateViewMatrix();
 
 public: // メンバ関数
-	bool Initialize();
+	bool Initialize(const std::string& resourcename);
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
@@ -224,7 +230,7 @@ private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 
 	// テクスチャバッファ
-	static ComPtr<ID3D12Resource> texbuff;
+	 ComPtr<ID3D12Resource> texbuff;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
