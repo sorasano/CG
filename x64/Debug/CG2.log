@@ -1,9 +1,5 @@
-﻿  Camera.cpp
-C:\Users\bigsk\source\repos\CG2\Camera.cpp(95,15): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-C:\Users\bigsk\source\repos\CG2\Camera.cpp(98,15): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
-  main.cpp
+﻿  main.cpp
 C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
 C:\Users\bigsk\source\repos\CG2\main.cpp(113,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
 C:\Users\bigsk\source\repos\CG2\main.cpp(194,7): warning C4101: 'hit': ローカル変数は 1 度も使われていません。
-  コードを生成中...
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe

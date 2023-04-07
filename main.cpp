@@ -343,6 +343,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		// DirectX毎フレーム処理 ここから
 
+		input->Update();
+
 		//更新処理-ここから
 
 		//射影変換
@@ -350,7 +352,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//カメラ更新
 		camera->Update();
 
-		//ワールド変換
+		//----球----
 
 		//平行移動更新
 
@@ -364,12 +366,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		}
 
-		input->Update();
-
 		sphere_->setPosition(position_);
 		sphere_->setRotation(XMFLOAT3(0, 0, 0));
 	/*	sphere_->setScale(XMFLOAT3(1, 100, 100));*/
-
 
 		sphere_->Update(camera->matView, camera->matProjection);
 
@@ -382,7 +381,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 		
-		//パーティクル
+		//----パーティクル----
 		particle1->Update();
 		particle2->Update();
 
@@ -391,12 +390,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//描画前処理
 		dxCommon->PreDraw();
 
+		//----球----
 		sphere_->Draw();
 		sphereRed_->Draw();
 
 		//plane_->Draw();
 
-		//スプライト描画
+		//----スプライト描画----
 		//スプライト共通コマンド
 		sprite_->SpriteCommonBeginDraw(dxCommon->GetCommandList(), spriteCommon_);
 
@@ -405,10 +405,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		testSprite2_.SpriteDraw(dxCommon->GetCommandList(), testSprite2_, spriteCommon_, dxCommon->GetDevice());
 
 		commandList = dxCommon->GetCommandList();
-
-		//パーティクル
-		particle1->Draw();
-		particle2->Draw();
+		
+		//----パーティクル----
+		//particle1->Draw();
+		//particle2->Draw();
 
 		// ４．描画コマンドここまで
 
