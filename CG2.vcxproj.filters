@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\シェーダーファイル">
-      <UniqueIdentifier>{a1bb15bc-c09e-45aa-9e84-37293925dcbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Base">
       <UniqueIdentifier>{7802e0b0-5b07-468f-aed6-9faa120bbcb7}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Sprite">
       <UniqueIdentifier>{a3f49882-a971-4c82-9e6f-5aec8d602b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル">
+      <UniqueIdentifier>{a1bb15bc-c09e-45aa-9e84-37293925dcbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,25 +66,55 @@
     <ClCompile Include="Plane.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
-      <Filter>ヘッダー ファイル\シェーダーファイル</Filter>
+      <Filter>シェーダーファイル</Filter>
     </None>
-    <None Include="Sprite.hlsli" />
-    <None Include="Obj.hlsli" />
+    <None Include="Sprite.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+    <None Include="Obj.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+    <None Include="Particle.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
-      <Filter>ヘッダー ファイル\シェーダーファイル</Filter>
+      <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\BasicVS.hlsl">
-      <Filter>ヘッダー ファイル\シェーダーファイル</Filter>
+      <Filter>シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="SpritePS.hlsl" />
-    <FxCompile Include="SpriteVS.hlsl" />
-    <FxCompile Include="ObjVertex.hlsl" />
-    <FxCompile Include="ObjPixel.hlsl" />
+    <FxCompile Include="SpriteVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="SpritePS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ObjVertex.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ObjPixel.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleGS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticlePS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Input.h">
@@ -118,6 +148,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

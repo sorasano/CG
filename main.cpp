@@ -48,6 +48,9 @@ using namespace std;
 
 static double PI = 3.14159265359;
 
+#include "Camera.h"
+#include "ParticleManager.h"
+
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	// メッセージに応じてゲーム固有の処理を行う
@@ -191,22 +194,16 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	bool hit;
 
 	//ビュー変換行列
-	XMMATRIX matView;
-	XMFLOAT3 eye = { -10, 10, -50 };
+
+	XMFLOAT3 eye = { -10, 1, 50 };
 	XMFLOAT3 target = { 0, 0, 0 };
 	XMFLOAT3 up = { 0, 1, 0 };
+	//カメラ
 	//カメラ初期化
-	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-
-	//射影変換
-	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(45.0f),			//上下画角45度
-		(float)window_width / window_height,//アスペクト比(画面横幅/画面立幅)
-		0.1f, 1000.0f						//前端、奥端
-	);
-
-	float angle = 0.0f; // カメラの回転角
+	Camera* camera{};
+	camera = new Camera;
+	camera->StaticInitialize(dxCommon->GetDevice());
+	camera->Initialize(eye, target, up, input);
 
 
 	//アフィン変換情報
@@ -264,6 +261,75 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline(dxCommon->GetDevice());
 
 
+	//パーティクル1
+
+	// パーティクル静的初期化
+	ParticleManager::StaticInitialize(dxCommon, WinApp::winW, WinApp::winH);
+
+
+	ParticleManager* particle1 = new ParticleManager();
+	//パーティクル生成
+	particle1->Initialize("Resources/effect1.png");
+
+	for (int i = 0; i < 100; i++) {
+		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+		const float md_pos = 10.0f;
+		XMFLOAT3 pos{};
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+		const float md_vel = 0.1f;
+		XMFLOAT3 vel{};
+		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		XMFLOAT3 acc{};
+		const float md_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+		//追加
+		particle1->Add(600, pos, vel, acc);
+
+	}
+
+	particle1->Update();
+
+
+	ParticleManager* particle2 = new ParticleManager();
+	//パーティクル生成
+	particle2->Initialize("Resources/effect2.png");
+
+	for (int i = 0; i < 100; i++) {
+		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+		const float md_pos = 10.0f;
+		XMFLOAT3 pos{};
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+		const float md_vel = 0.1f;
+		XMFLOAT3 vel{};
+		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+		XMFLOAT3 acc{};
+		const float md_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+		//追加
+		particle2->Add(600, pos, vel, acc);
+
+	}
+
+	particle2->Update();
+
 	//描画初期化処理　ここまで
 
 	// ゲームループ
@@ -281,25 +347,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//射影変換
 
-		if (input->PushKey(DIK_D) || input->PushKey(DIK_A)) {
-			if (input->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-			else if (input->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
-
-			//angleラジアンだけY軸回りに回転.半径は-100
-			eye.x = -10 * sinf(angle);
-			eye.z = -10 * cosf(angle);
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-		}
-
-		if (input->PushKey(DIK_W)) {
-			eye.y += 0.1;
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		}		
-		if (input->PushKey(DIK_S)) {
-			eye.y -= 0.1;
-			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-		}
+		//カメラ更新
+		camera->Update();
 
 		//ワールド変換
 
@@ -322,10 +371,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	/*	sphere_->setScale(XMFLOAT3(1, 100, 100));*/
 
 
-		sphere_->Update(matView, matProjection);
+		sphere_->Update(camera->matView, camera->matProjection);
 
 		sphereRed_->setPosition(XMFLOAT3(position_.x + 3, position_.y, position_.z));
-		sphereRed_->Update(matView, matProjection);
+		sphereRed_->Update(camera->matView, camera->matProjection);
 
 		//plane_->Update(matView, matProjection);
 
@@ -333,6 +382,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 		
+		//パーティクル
+		particle1->Update();
+		particle2->Update();
+
 		//更新処理-ここまで
 
 		//描画前処理
@@ -353,6 +406,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		commandList = dxCommon->GetCommandList();
 
+		//パーティクル
+		particle1->Draw();
+		particle2->Draw();
 
 		// ４．描画コマンドここまで
 
