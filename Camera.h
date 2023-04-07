@@ -50,6 +50,6 @@ private:
 
 	Input* input = nullptr;
 
-	float angle = 0.01f; // ƒJƒƒ‰‚Ì‰ñ“]Šp
+	float angle = 0.1f; // ƒJƒƒ‰‚Ì‰ñ“]Šp
 
 };

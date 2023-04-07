@@ -81,21 +81,29 @@ void Camera::UpdateEye()
 {
 	//ŽË‰e•ÏŠ·
 
-	if (input->PushKey(DIK_D) || input->PushKey(DIK_A)) {
-		if (input->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-		else if (input->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+	//if (input->PushKey(DIK_D) || input->PushKey(DIK_A)) {
 
-		//angleƒ‰ƒWƒAƒ“‚¾‚¯YŽ²‰ñ‚è‚É‰ñ“].”¼Œa‚Í-100
-		eye.x = -10 * sinf(angle);
-		//eye.z = -10 * cosf(angle);
+	//	if (input->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+	//	else if (input->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
+	//	//angleƒ‰ƒWƒAƒ“‚¾‚¯YŽ²‰ñ‚è‚É‰ñ“].”¼Œa‚Í-100
+	//	eye.x = -100 * sinf(angle);
+	//	//eye.z = -10 * cosf(angle);
+
+	//}
+
+	if (input->PushKey(DIK_A)) {
+		eye.x += 1;
+	}
+	if (input->PushKey(DIK_D)) {
+		eye.x -= 1;
 	}
 
 	if (input->PushKey(DIK_W)) {
-		eye.y += 0.1;
+		eye.y += 1;
 	}
 	if (input->PushKey(DIK_S)) {
-		eye.y -= 0.1;
+		eye.y -= 1;
 	}
 
 }
