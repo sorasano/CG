@@ -407,8 +407,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList = dxCommon->GetCommandList();
 		
 		//----パーティクル----
-		//particle1->Draw();
-		//particle2->Draw();
+		particle1->Draw();
+		particle2->Draw();
 
 		// ４．描画コマンドここまで
 
