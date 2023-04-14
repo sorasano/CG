@@ -1,20 +1,46 @@
-﻿  Collision.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjPixel.cso
+C:\Users\bigsk\source\repos\CG2\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
+C:\Users\bigsk\source\repos\CG2\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
+C:\Users\bigsk\source\repos\CG2\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
+C:\Users\bigsk\source\repos\CG2\ObjVertex.hlsl(3,13-80): warning X3578: Output value 'main' is not completely initialized
+  
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjVertex.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleGS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticlePS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleVS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicVS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpritePS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpriteVS.cso
+  DirectXCommon.cpp
+  Input.cpp
+  WinApp.cpp
+  Camera.cpp
+  Collision.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   CollisionPrimitive.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Plane.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Sphere.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   main.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(76,24): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-C:\Users\bigsk\source\repos\CG2\main.cpp(266,16): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-C:\Users\bigsk\source\repos\CG2\main.cpp(270,16): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
-C:\Users\bigsk\source\repos\CG2\main.cpp(108,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
-C:\Users\bigsk\source\repos\CG2\main.cpp(109,29): warning C4101: 'commandList': ローカル変数は 1 度も使われていません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\main.cpp(113,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
+C:\Users\bigsk\source\repos\CG2\main.cpp(194,7): warning C4101: 'hit': ローカル変数は 1 度も使われていません。
+  Model.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.cpp(23,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
+  object3D.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  ParticleManager.cpp
+  Plane.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Player.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Sphere.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+  Sprite.cpp
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,70): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\Sprite.cpp(291,56): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   コード生成しています。
-  38 of 1227 functions ( 3.1%) were compiled, the rest were copied from previous compilation.
-    4 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB was built with incompatible compiler, fall back to full compilation.
+  All 1297 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Release\CG2.exe

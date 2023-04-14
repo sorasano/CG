@@ -13,6 +13,15 @@
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ObjVertex.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleGS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ParticlePS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso</FullPath>
     </ContentFile>
     <ContentFile>
