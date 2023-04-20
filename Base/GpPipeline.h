@@ -2,7 +2,7 @@
 #include<d3d12.h>
 #include<vector>
 #include<wrl.h>
-#include"Base/DirectXCommon.h"
+#include"DirectXCommon.h"
 
 
 #define BLEND_NOBLEND	(0)	//ƒuƒŒƒ“ƒh–³‚µ

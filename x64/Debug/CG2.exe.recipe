@@ -7,6 +7,12 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\ObjPixel.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -17,15 +23,6 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\ParticlePS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\ParticleVS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicPS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicVS.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpritePixelShader.cso</FullPath>

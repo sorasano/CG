@@ -7,7 +7,7 @@ using namespace Microsoft::WRL;
 #include"GpPipeline.h"
 #include"Texture.h"
 
-std::string SpriteManager::defaultTextureDirectoryPath = "Resources/";
+std::string SpriteManager::defaultTextureDirectoryPath = "";
 
 SpriteManager::SpriteManager()
 {
@@ -71,7 +71,7 @@ void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/SpriteVertexShader.hlsl", // シェーダファイル名
+		L"shaders/SpriteVertexShader.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -94,7 +94,7 @@ void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/SpritePixelShader.hlsl", // シェーダファイル名
+		L"shaders/SpritePixelShader.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -136,7 +136,7 @@ void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 		});
 
-	pipeline.SetPipeline(vsBlob.Get(), psBlob.Get(), inputLayout,BLEND_ALPHA);
+	pipeline.SetPipeline(vsBlob.Get(), psBlob.Get(), inputLayout, BLEND_ALPHA);
 
 	//スプライトでは背面カリングしない
 	pipeline.desc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
