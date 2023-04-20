@@ -1,130 +1,123 @@
 #pragma once
-#include <Windows.h>
-#include <D3dx12.h>
-
-#include <DirectXMath.h>
-using namespace DirectX;
-
-#include <d3dcompiler.h>
-#pragma comment(lib, "d3dcompiler.lib")
-
-#include <wrl.h>
-
-using namespace Microsoft::WRL;
-
-#include <cassert>
-
-#include <DirectXTex.h>
-
-#include "Base/DirectXCommon.h"
-
-struct PipelineSet {
-
-	ComPtr<ID3D12PipelineState> pipelinestate;
-
-	ComPtr<ID3D12RootSignature> rootsignature;
-
-};
 
 
-//スプライト用
-struct VertexPosUv {
-	XMFLOAT3 pos;
-	XMFLOAT2 uv;
-};
+#include<DirectXMath.h>
+#include"Texture.h"
+#include<string>
+#include"Vector3.h"
+#include"SpriteManager.h"
+#include"Easing.h"
 
-//スプライトの共通データ
-struct SpriteCommon {
-
-	//テクスチャの最大枚数
-	static const int spriteSRVCount = 512;
-
-	//パイプラインセット
-	PipelineSet pipelineSet;
-
-	//射影行列
-	XMMATRIX matProjrction{};
-
-	//テクスチャ用デスクリプタヒープの生成
-	ComPtr<ID3D12DescriptorHeap> descHeap;
-	//テクスチャソース(テクスチャバッファ)の配列
-	ComPtr<ID3D12Resource> texBuff[spriteSRVCount];
-
+enum VertexNumber {
+	LB,	//左下
+	LT,	//左上
+	RB,	//右下
+	RT,	//右上
 };
 
 class Sprite
 {
-	//-----------スプライト----------
-
-public:
-
-
-	void SetPiplineSet(PipelineSet piplineSet);
-
-	PipelineSet SpriteCreateGraphicsPipeline(ID3D12Device* dev);
-
-	//スプライト1枚分のデータ
 
 private:
-	//頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
-	//頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//定数バッファ
-	ComPtr<ID3D12Resource> constBuff;
-	//Z軸回りの回転角
-	float rotation = 0.0f;
-	//座標
-	XMFLOAT3 position = { 0,0,0 };
-	//ワールド行列
-	XMMATRIX matWorld;
-
-	UINT texNumber = 0;
-
-	XMFLOAT2 size = { 100,100 };
-
-	struct ConstBufferData {
-		XMFLOAT4 color; // 色 (RGBA)
-		XMMATRIX mat; //座標
-	};
-
-	//コマンドリスト
-	ComPtr<ID3D12GraphicsCommandList> cmdList;
-	DirectXCommon* dx = nullptr;
-	ComPtr<ID3D12DescriptorHeap> descHeap;
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-
-public:
-
-	//スプライト生成
-	Sprite SpriteCreate(ID3D12Device* dev, int window_width, int window_height);
-
-	//スプライト共通データ生成
-	SpriteCommon SpriteCommonCreate(ID3D12Device* dev, int window_width, int window_height);
-
-	//スプライト共通グラフィックスコマンドのセット
-	void SpriteCommonBeginDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon);
-
-	//スプライト単体描画
-
-	void SpriteDraw(ID3D12GraphicsCommandList* cmdList, const Sprite& sprite, const SpriteCommon& spriteCommon, ID3D12Device* dev);
-
-	//スプライト単体更新
-	void SpriteUpdate(Sprite& sprite, const SpriteCommon& spriteCommon);
-
-	//スプライト共通テクスチャ読み込み
-	void SpriteCommonLoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename, ID3D12Device* dev);
-
-	//スプライト単体頂点バッファの転送
-	void SpriteTransferVertexBuffer(const Sprite& sprite);
-
-	//セッター
-	void SetTexNumber(UINT texnumber) { this->texNumber = texnumber; }
-
-	void SetPosition(XMFLOAT3 position) { this->position = position; }
-	void SetScale(XMFLOAT2 scale) { this->size = scale; }
 
 
-	void Release();
+public:	//メンバ変数
+
+	//マネージャクラスのポインタ
+	SpriteManager* spriteManager = nullptr;
+
+	VertexPosUv vertices[4] = {};		//頂点座標データ
+	D3D12_VERTEX_BUFFER_VIEW vbView{};	//頂点バッファビュー
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;	//頂点バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff = nullptr;	//定数バッファ
+	uint32_t textureIndex = 0;	//テクスチャに割り当てられている番号
+	ConstBufferData* constMap = nullptr;//定数バッファ構造体
+
+	DirectX::XMMATRIX matWorld{};	//ワールド変換行列
+	float rotation = 0.0f;	//回転角
+	DirectX::XMFLOAT2 position = { 0.0f,0.0f };	//座標
+	DirectX::XMFLOAT4 color = { 1,1,1,1 };	//座標
+	DirectX::XMFLOAT2 size = { 100.0f,100.0f };//スプライトサイズ
+	DirectX::XMFLOAT2 anchorPoint = { 0.0f,0.0f };//アンカーポイント(座標変換の基準点)
+	bool isFlipX = false;	//左右反転フラグ
+	bool isFlipY = false;	//上下反転フラグ
+	bool isInvisible = false;	//非表示フラグ
+
+	DirectX::XMFLOAT2 textureLeftTop = { 0.0f,0.0f };	//テクスチャ左上座標
+	DirectX::XMFLOAT2 textureSize = { 100.0f,100.0f };	//テクスチャ切り出しサイズ
+
+	//画面外から入ってくる演出用
+	Easing flipInEase;
+	//フリップ初期化
+	bool initFlip = false;
+	//演出中か
+	bool isflipEase = false;
+	//演出の段階
+	int flipInFase;
+	//揺れ幅
+	float flipInRangeUp = 50;
+	float flipInRangeDown = 100;
+	//演出が終わったか
+	bool endFlip = false;
+
+	//揺れ用
+	Easing swayEase;
+	//揺れ初期化
+	bool initSway = false;
+	//揺れ幅
+	float swayRange = 100;
+	//揺れてるか
+	bool isSway = false;
+	//上昇中か下降中か
+	bool isSwayUp = true;
+	//演出開始位置
+	DirectX::XMFLOAT2 startEasePos;
+	//中心点
+	DirectX::XMFLOAT2 swayCenterPos;
+
+
+public: //メンバ関数
+	void Initialize(uint32_t textureNum = UINT32_MAX);
+
+	void Draw();
+	void SetColor(const DirectX::XMFLOAT4& color_) { color = color_; }
+	void SetPos(const DirectX::XMFLOAT2& pos) { position = pos; }
+	void SetRotation(float rotation) { this->rotation = rotation; }
+	void SetSize(const DirectX::XMFLOAT2& size_) { size = size_; }
+	void SetAnchorPoint(const DirectX::XMFLOAT2& point) { anchorPoint = point; }
+	void SetFlipX(bool flipX) { isFlipX = flipX; }
+	void SetFlipY(bool flipY) { isFlipY = flipY; }
+	void SetInvisible(bool flag) { isInvisible = flag; }
+	void SetTextureNum(uint32_t index) { textureIndex = index; }
+	void SetTextureLeftTop(const DirectX::XMFLOAT2& leftTop) { textureLeftTop = leftTop; }
+	void SetTextureSize(const DirectX::XMFLOAT2& size) { textureSize = size; }
+
+	const DirectX::XMFLOAT2& GetPosition()const { return position; }
+	float GetRotation()const { return rotation; }
+	const DirectX::XMFLOAT4 GetColor()const { return color; }
+	const DirectX::XMFLOAT2 GetSize()const { return size; }
+	const DirectX::XMFLOAT2 GetAnchorPoint()const { return anchorPoint; }
+	bool GetIsFlipX()const { return isFlipX; }
+	bool GetIsFlipY()const { return isFlipY; }
+	bool GetIsInvisible()const { return isInvisible; }
+	uint32_t GetTextureNum()const { return textureIndex; }
+	const DirectX::XMFLOAT2 GetTextureLeftTop()const { return textureLeftTop; }
+	const DirectX::XMFLOAT2 GetTextureSize()const { return textureSize; }
+
+	void Update();
+
+	//演出
+
+	//画面外へアウト
+	void StartFlipOut() { isflipEase = true; };
+	void FlipOut();
+
+	//揺れる	center=中心点
+	void StartSway(DirectX::XMFLOAT2 center) { isSway = true, swayCenterPos = center; }
+	void Sway();
+
+private:
+	//テクスチャサイズをイメージサイズに合わせる
+	void AdjustTextureSize();
 };
 

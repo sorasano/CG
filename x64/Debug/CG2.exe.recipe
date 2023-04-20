@@ -28,10 +28,10 @@
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\BasicVS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpritePS.cso</FullPath>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpritePixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpriteVS.cso</FullPath>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Debug\SpriteVertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
