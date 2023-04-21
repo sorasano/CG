@@ -6,6 +6,11 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	delete test1Sprite;
+	delete test2Sprite;
+	delete camera;
+	delete particle1;
+	delete particle2;
 }
 
 void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
@@ -16,6 +21,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 
 	//描画初期化処理　ここから
 	HRESULT result;
+
+	//モデル名を指定してファイル読み込み
+	FbxLoader::GetInstance()->LoadModelFromFile("cube");
 
 	//3dモデル
 	//----------球----------
@@ -226,12 +234,12 @@ void GameScene::Draw()
 	////-------背景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
 
-	sphere_->Draw();
-	sphereRed_->Draw();
+	//sphere_->Draw();
+	//sphereRed_->Draw();
 
 	//----パーティクル----
-	particle1->Draw();
-	particle2->Draw();
+	//particle1->Draw();
+	//particle2->Draw();
 
 	////-------前景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();

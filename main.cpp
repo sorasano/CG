@@ -50,6 +50,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	spriteManager = SpriteManager::GetInstance();
 	spriteManager->Initialize(dxCommon, WinApp::winW, WinApp::winH);
 
+	//fbxLoadr汎用初期化
+	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
+
 	//ゲームシーン
 	GameScene* gameScene = nullptr;
 	gameScene = new GameScene();
@@ -59,7 +62,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// ゲームループ
 	while (true) {
-		
+
 		//Windowsのメッセージ処理
 		if (winApp->processMessage()) {
 			//ゲームループを抜ける
@@ -84,16 +87,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 
 	//WindowsAPI解放
-//delete winApp;
-//winApp = nullptr;
+	delete winApp;
+	winApp = nullptr;
 
 	//DirextX解放
-//delete dxCommon;
+	delete dxCommon;
 
+	//入力開放
+	delete input;
 
-	////入力開放
-//delete input;
-// 
+	//gamescene解放
+	delete gameScene;
+
+	//fbxLoader解放
+	FbxLoader::GetInstance()->Finalize();
+
 	//コンソールへの文字出力
 	OutputDebugStringA("Hello,DirectX!!\n");
 

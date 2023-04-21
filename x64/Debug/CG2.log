@@ -1,5 +1,1 @@
-﻿  GpPipeline.cpp
-C:\Users\bigsk\source\repos\CG2\Base\GpPipeline.cpp(78,51): warning C4267: '=': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  SpriteManager.cpp
-  コードを生成中...
-  CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
+﻿  CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe

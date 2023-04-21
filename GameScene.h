@@ -9,6 +9,7 @@
 #include "Sprite.h"
 #include "ParticleManager.h"
 #include "Collision.h"
+#include "FbxLoader.h"
 
 #include "Player.h"
 #include "Sphere.h"

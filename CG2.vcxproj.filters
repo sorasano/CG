@@ -34,6 +34,12 @@
     <Filter Include="ヘッダー ファイル\Math">
       <UniqueIdentifier>{82a63c4f-7e23-4592-8a31-de0e8fa3c8ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\fbx">
+      <UniqueIdentifier>{645db548-1da1-404c-8f8f-69d74ba81a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\fbx">
+      <UniqueIdentifier>{f259b1f2-65b0-491e-b818-6954f67d42c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Base\GpPipeline.cpp">
       <Filter>ソース ファイル\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="fbx\FbxLoader.cpp">
+      <Filter>ソース ファイル\fbx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="Math\Vector3.h">
       <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="fbx\FbxLoader.h">
+      <Filter>ヘッダー ファイル\fbx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
