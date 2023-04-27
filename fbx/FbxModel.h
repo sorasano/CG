@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <DirectXmath.h>
+#include <DirectXTex.h>
 
 struct Node {
 	//名前
@@ -27,11 +28,34 @@ public:
 	//フレンドクラス
 	friend class FbxLoader;
 
+public
+	://サブクラス
+	//頂点データ構造
+	struct VertexPosNormalUv {
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT3 normal;
+		DirectX::XMFLOAT2 uv;
+	};
+
 private:
 	//モデル名
 	std::string name;
 	//ノード配列
 	std::vector<Node> nodes;
+	//メッシュを持つノード
+	Node* meshNode = nullptr;
+	//頂点データ配列
+	std::vector<VertexPosNormalUv> vertices;
+	//頂点インデックス配列
+	std::vector<unsigned short> indices;
 
+	//アンビエント係数
+	DirectX::XMFLOAT3 ambient = { 1,1,1 };
+	//ディフューズ係数
+	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
+	//テクスチャメタデータ
+	DirectX::TexMetadata metadata = {};
+	//スクラッチイメージ
+	DirectX::ScratchImage scratchImg = {};
 };
 

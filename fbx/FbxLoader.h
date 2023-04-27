@@ -32,9 +32,22 @@ public:
 public:
 	//FBXファイルの読み込み
 	void LoadModelFromFile(const string& modelName);
-
 	//再起敵にノード構成を解析
 	void ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent = nullptr);
+	//メッシュ読み取り
+	void ParseMesh(FbxModel* model, FbxNode* fbxNode);
+	//ディレクトリを含んだファイルパスからファイル名を抽出する
+	std::string ExtractFileName(const std::string& path);
+
+public://メッシュサブ関数
+	//頂点座標読み取り
+	void ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh);
+	//面情報読み取り
+	void ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh);
+	//マテリアル読み取り
+	void ParseMaterial(FbxModel* model, FbxNode* fbxNode);
+	//テクスチャ読み込み
+	void LoadTexture(FbxModel* model, const std::string& fullpath);
 
 private:
 	//D3D12デバイス
@@ -43,6 +56,10 @@ private:
 	FbxManager* fbxManager = nullptr;
 	//FBXインポーター
 	FbxImporter* fbxImporter = nullptr;
+
+private:
+	//テクスチャがない場合の標準テクスチャファイル名
+	static const string defaultTextureFileName;
 
 private:
 	// privateなコンストラクタ（シングルトンパターン）
