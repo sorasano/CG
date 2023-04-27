@@ -108,6 +108,9 @@
     <ClCompile Include="fbx\FbxLoader.cpp">
       <Filter>ソース ファイル\fbx</Filter>
     </ClCompile>
+    <ClCompile Include="fbx\FbxModel.cpp">
+      <Filter>ソース ファイル\fbx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\Basic.hlsli">
@@ -211,6 +214,9 @@
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="fbx\FbxLoader.h">
+      <Filter>ヘッダー ファイル\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="fbx\FbxModel.h">
       <Filter>ヘッダー ファイル\fbx</Filter>
     </ClInclude>
   </ItemGroup>
