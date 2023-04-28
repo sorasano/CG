@@ -11,6 +11,8 @@ GameScene::~GameScene()
 	delete camera;
 	delete particle1;
 	delete particle2;
+	FBX_SAFE_DELETE(fbxModel1);
+	FBX_SAFE_DELETE(fbxObject1);
 }
 
 void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
@@ -22,8 +24,28 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	//描画初期化処理　ここから
 	HRESULT result;
 
+	//カメラ
+	//カメラ初期化
+	camera = new Camera;
+	camera->StaticInitialize(dxCommon->GetDevice());
+	camera->Initialize(eye, target, up, input_);
+
+	camera->SetTarget({0,20,0});
+	camera->SetEye({ 0,0,300 });
+
+	//デバイスをセット
+	FbxObject3D::SetDevice(dxCommon->GetDevice());
+	FbxObject3D::SetCamera(camera);
+	//グラフィックスパイプライン生成
+	FbxObject3D::CreateGraphicsPipeline();
+
 	//モデル名を指定してファイル読み込み
-	FbxLoader::GetInstance()->LoadModelFromFile("cube");
+	fbxModel1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+
+	//3dオブジェクト生成とモデルのセット
+	fbxObject1 = new FbxObject3D;
+	fbxObject1->Initialize();
+	fbxObject1->SetModel(fbxModel1);
 
 	//3dモデル
 	//----------球----------
@@ -87,13 +109,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	////球
 	sphere_->sphereCol.radius = 1;
 	sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
-
-
-	//カメラ
-	//カメラ初期化
-	camera = new Camera;
-	camera->StaticInitialize(dxCommon->GetDevice());
-	camera->Initialize(eye, target, up, input_);
 
 	//スプライト生成
 	//---test1---
@@ -222,6 +237,10 @@ void GameScene::Update()
 
 	//hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 
+
+	//fbx
+	fbxObject1->Update();
+
 	//----パーティクル----
 	particle1->Update();
 	particle2->Update();
@@ -237,12 +256,16 @@ void GameScene::Draw()
 	//sphere_->Draw();
 	//sphereRed_->Draw();
 
+	fbxObject1->Draw(dxCommon_->GetCommandList());
+
+
+	////-------前景スプライト描画処理-------//
+	SpriteManager::GetInstance()->beginDraw();
+
 	//----パーティクル----
 	//particle1->Draw();
 	//particle2->Draw();
 
-	////-------前景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
 	//スプライト
 	//test1Sprite->Draw();
 	//test2Sprite->Draw();

@@ -10,6 +10,7 @@
 #include "ParticleManager.h"
 #include "Collision.h"
 #include "FbxLoader.h"
+#include "FbxObject3d.h"
 
 #include "Player.h"
 #include "Sphere.h"
@@ -44,6 +45,10 @@ private:
 
 	std::unique_ptr<Model> sphereRedModel_;
 	std::unique_ptr<Sphere> sphereRed_;
+
+	//Fbx
+	FbxModel* fbxModel1 = nullptr;
+	FbxObject3D* fbxObject1 = nullptr;
 
 	//ƒJƒƒ‰‰Šú‰»
 	Camera* camera{};

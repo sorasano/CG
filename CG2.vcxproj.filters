@@ -111,6 +111,9 @@
     <ClCompile Include="fbx\FbxModel.cpp">
       <Filter>ソース ファイル\fbx</Filter>
     </ClCompile>
+    <ClCompile Include="FbxObject3d.cpp">
+      <Filter>ソース ファイル\fbx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\Basic.hlsli">
@@ -123,6 +126,9 @@
       <Filter>シェーダーファイル</Filter>
     </None>
     <None Include="shaders\Particle.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+    <None Include="Resources\shaders\FBX.hlsli">
       <Filter>シェーダーファイル</Filter>
     </None>
   </ItemGroup>
@@ -149,6 +155,12 @@
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="shaders\ParticlePS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBXVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBXPS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>
@@ -217,6 +229,9 @@
       <Filter>ヘッダー ファイル\fbx</Filter>
     </ClInclude>
     <ClInclude Include="fbx\FbxModel.h">
+      <Filter>ヘッダー ファイル\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxObject3d.h">
       <Filter>ヘッダー ファイル\fbx</Filter>
     </ClInclude>
   </ItemGroup>

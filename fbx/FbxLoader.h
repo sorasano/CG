@@ -31,7 +31,7 @@ public:
 
 public:
 	//FBXファイルの読み込み
-	void LoadModelFromFile(const string& modelName);
+	FbxModel* LoadModelFromFile(const string& modelName);
 	//再起敵にノード構成を解析
 	void ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent = nullptr);
 	//メッシュ読み取り

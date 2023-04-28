@@ -36,8 +36,6 @@ public:
 
 	void UpdateMatrix();
 
-	XMMATRIX GetViewProjection()const { return matView * matProjection; }
-
 	void Update();
 
 	//eyeの更新
@@ -45,6 +43,12 @@ public:
 
 	//targetの更新
 	void UpdateTarget();
+
+	XMMATRIX GetViewProjection()const { return matView * matProjection; }
+	XMFLOAT3 GetEye() { return eye; }
+
+	void SetEye(XMFLOAT3 eye) { this->eye = eye; }
+	void SetTarget(XMFLOAT3 target) { this->target = target; }
 
 private:
 
