@@ -5,11 +5,16 @@
 #include <DirectXmath.h>
 #include <DirectXTex.h>
 
+#include "windows.h"
+#include "wrl.h"
+#include "d3d12.h"
+#include "d3dx12.h"
+
 struct Node {
 	//名前
 	std::string name;
 	//ローカルスケール
-	DirectX::XMVECTOR  scaling = {1,1,1,0};
+	DirectX::XMVECTOR  scaling = { 1,1,1,0 };
 	//ローカル回転角
 	DirectX::XMVECTOR  rotation = { 0,0,0,0 };
 	//ローカル移動
@@ -28,14 +33,54 @@ public:
 	//フレンドクラス
 	friend class FbxLoader;
 
-public
-	://サブクラス
+public://サブクラス
+
 	//頂点データ構造
 	struct VertexPosNormalUv {
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT3 normal;
 		DirectX::XMFLOAT2 uv;
 	};
+
+private:	//エイリアス
+	//Microsoft::WRL::を省略
+	template<class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
+	//DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+	using TexMetadata = DirectX::TexMetadata;
+	using ScracthImage = DirectX::ScratchImage;
+	//std::を省略
+	using string = std::string;
+	template<class T>using vector = std::vector<T>;
+
+public:
+	//バッファ生成
+	void CreateBuffers(ID3D12Device* device);
+
+	//描画
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	//ゲッター
+
+	//モデルの変形行列取得
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
+
+private:
+	//頂点バッファ
+	ComPtr<ID3D12Resource> vertBuff;
+	//インデックスバッファ
+	ComPtr<ID3D12Resource>indexBuff;
+	//テクスチャバッファ
+	ComPtr<ID3D12Resource>texBuff;
+	//頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vbView = {};
+	//インデックスバッファビュー
+	D3D12_INDEX_BUFFER_VIEW ibView = {};
+	//SRV用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap>descHeapSRV;
 
 private:
 	//モデル名
