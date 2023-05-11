@@ -14,7 +14,7 @@ class Model
 {
 public:
 	// 頂点データ構造体
-	struct VertexPosNormalUv
+	struct VertexPosNormalUvSkin
 	{
 		XMFLOAT3 pos; // xyz座標
 		XMFLOAT3 normal; // 法線ベクトル
@@ -103,7 +103,7 @@ private:
 	};
 	//Vertex関連
 	size_t verticesCount = 24;
-	std::vector<VertexPosNormalUv> vertices;	//外部に渡す用の頂点データ
+	std::vector<VertexPosNormalUvSkin> vertices;	//外部に渡す用の頂点データ
 	size_t indicesCount = 36;
 	std::vector<unsigned short> indices;
 	//インデックスバッファ関連

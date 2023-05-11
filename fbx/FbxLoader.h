@@ -48,6 +48,8 @@ public://メッシュサブ関数
 	void ParseMaterial(FbxModel* model, FbxNode* fbxNode);
 	//テクスチャ読み込み
 	void LoadTexture(FbxModel* model, const std::string& fullpath);
+	//スキニング情報の読み取り
+	void ParseSkin(FbxModel* model,FbxMesh* fbxMesh);
 
 private:
 	//D3D12デバイス
@@ -60,6 +62,12 @@ private:
 private:
 	//テクスチャがない場合の標準テクスチャファイル名
 	static const string defaultTextureFileName;
+	/// <summary>
+	/// FBXの行列をXMatrixiに変換
+	/// </summary>
+	/// <param name="dst">書き込み先</param>
+	/// <param name="src">元となるFBX行列</param>
+	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst,const FbxAMatrix& src);
 
 private:
 	// privateなコンストラクタ（シングルトンパターン）
