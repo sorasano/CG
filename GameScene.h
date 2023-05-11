@@ -50,6 +50,9 @@ private:
 	FbxModel* fbxModel1 = nullptr;
 	FbxObject3D* fbxObject1 = nullptr;
 
+	FbxModel* spherefbxModel = nullptr;
+	FbxObject3D* spherefbxObject = nullptr;
+
 	//カメラ初期化
 	Camera* camera{};
 
@@ -73,7 +76,7 @@ private:
 
 	//ビュー変換行列
 
-	XMFLOAT3 eye = { -10, 1, 50 };
+	XMFLOAT3 eye = { 0, 1, 5 };
 	XMFLOAT3 target = { 0, 0, 0 };
 	XMFLOAT3 up = { 0, 1, 0 };
 

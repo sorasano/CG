@@ -30,8 +30,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	camera->StaticInitialize(dxCommon->GetDevice());
 	camera->Initialize(eye, target, up, input_);
 
-	camera->SetTarget({0,20,0});
-	camera->SetEye({ 0,0,300 });
+	//camera->SetTarget({0,20,0});
+	//camera->SetEye({ 0,0,300 });
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon->GetDevice());
@@ -46,6 +46,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	fbxObject1 = new FbxObject3D;
 	fbxObject1->Initialize();
 	fbxObject1->SetModel(fbxModel1);
+
+	//モデル名を指定してファイル読み込み
+	spherefbxModel = FbxLoader::GetInstance()->LoadModelFromFile("fbxSphere");
+
+	//3dオブジェクト生成とモデルのセット
+	spherefbxObject = new FbxObject3D;
+	spherefbxObject->Initialize();
+	spherefbxObject->SetModel(spherefbxModel);
 
 	//3dモデル
 	//----------球----------
@@ -241,6 +249,8 @@ void GameScene::Update()
 	//fbx
 	fbxObject1->Update();
 
+	spherefbxObject->Update();
+
 	//----パーティクル----
 	particle1->Update();
 	particle2->Update();
@@ -256,8 +266,9 @@ void GameScene::Draw()
 	//sphere_->Draw();
 	//sphereRed_->Draw();
 
-	fbxObject1->Draw(dxCommon_->GetCommandList());
+	//fbxObject1->Draw(dxCommon_->GetCommandList());
 
+	spherefbxObject->Draw(dxCommon_->GetCommandList());
 
 	////-------前景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();

@@ -9,6 +9,8 @@ VSOutput main(VSInput input)
 	VSOutput output;
 	//行列による座標返還
 	output.svpos = mul(mul(viewproj, world), input.pos);
+	//頂点座標をワールド座標に変換
+	output.worldPosition = mul(world, output.svpos);
 	//ワールド法線を次のステージに渡す
 	output.normal = wnormal.xyz;
 	//入力値をそのまま次のステージ渡す
