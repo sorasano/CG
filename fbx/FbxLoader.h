@@ -39,6 +39,13 @@ public:
 	//ディレクトリを含んだファイルパスからファイル名を抽出する
 	std::string ExtractFileName(const std::string& path);
 
+	/// <summary>
+	/// FBXの行列をXMatrixiに変換
+	/// </summary>
+	/// <param name="dst">書き込み先</param>
+	/// <param name="src">元となるFBX行列</param>
+	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
+
 public://メッシュサブ関数
 	//頂点座標読み取り
 	void ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh);
@@ -62,12 +69,6 @@ private:
 private:
 	//テクスチャがない場合の標準テクスチャファイル名
 	static const string defaultTextureFileName;
-	/// <summary>
-	/// FBXの行列をXMatrixiに変換
-	/// </summary>
-	/// <param name="dst">書き込み先</param>
-	/// <param name="src">元となるFBX行列</param>
-	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst,const FbxAMatrix& src);
 
 private:
 	// privateなコンストラクタ（シングルトンパターン）

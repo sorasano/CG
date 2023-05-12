@@ -1,5 +1,6 @@
 #pragma once
 #include "FbxModel.h"
+#include "FbxModel.h"
 #include "Camera.h"
 
 #include <windows.h>
@@ -11,6 +12,9 @@
 
 class FbxObject3D
 {
+public: //定数
+	//ボーンの最大数
+	static const int MAX_BONES = 32;
 public:
 	//サブクラス
 	//定数バッファ用データ構造体
@@ -19,6 +23,11 @@ public:
 		XMMATRIX viewproj;
 		XMMATRIX world;
 		XMFLOAT3 cameraPos;
+	};
+
+	//定数バッファ用データ構造体(スキニング)
+	struct ConstBufferDataSkin {
+		XMMATRIX bones[MAX_BONES];
 	};
 
 private:	//エイリアス
@@ -61,6 +70,8 @@ public://メンバ関数
 protected://メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource>constBuffTransform;
+	//定数バッファ(スキン)
+	ComPtr<ID3D12Resource> constBuffSkin;
 
 private:
 

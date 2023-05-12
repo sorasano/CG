@@ -50,6 +50,9 @@ private:
 	FbxModel* fbxModel1 = nullptr;
 	FbxObject3D* fbxObject1 = nullptr;
 
+	FbxModel* fbxModel2 = nullptr;
+	FbxObject3D* fbxObject2 = nullptr;
+
 	//ƒJƒƒ‰‰Šú‰»
 	Camera* camera{};
 

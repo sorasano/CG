@@ -30,8 +30,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	camera->StaticInitialize(dxCommon->GetDevice());
 	camera->Initialize(eye, target, up, input_);
 
-	camera->SetTarget({0,20,0});
-	camera->SetEye({ 0,0,300 });
+	camera->SetTarget({0,0,0});
+	camera->SetEye({ 0,0,30 });
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon->GetDevice());
@@ -46,6 +46,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	fbxObject1 = new FbxObject3D;
 	fbxObject1->Initialize();
 	fbxObject1->SetModel(fbxModel1);
+
+	//モデル名を指定してファイル読み込み
+	fbxModel2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+
+	//3dオブジェクト生成とモデルのセット
+	fbxObject2 = new FbxObject3D;
+	fbxObject2->Initialize();
+	fbxObject2->SetModel(fbxModel2);
 
 	//3dモデル
 	//----------球----------
@@ -240,6 +248,7 @@ void GameScene::Update()
 
 	//fbx
 	fbxObject1->Update();
+	fbxObject2->Update();
 
 	//----パーティクル----
 	particle1->Update();
@@ -256,7 +265,8 @@ void GameScene::Draw()
 	//sphere_->Draw();
 	//sphereRed_->Draw();
 
-	fbxObject1->Draw(dxCommon_->GetCommandList());
+	//fbxObject1->Draw(dxCommon_->GetCommandList());
+	fbxObject2->Draw(dxCommon_->GetCommandList());
 
 
 	////-------前景スプライト描画処理-------//

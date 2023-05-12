@@ -1,18 +1,6 @@
-﻿  FbxLoader.cpp
-  FbxModel.cpp
-C:\Users\bigsk\source\repos\CG2\fbx\FbxModel.cpp(9,82): warning C4267: '初期化中': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  FbxObject3d.cpp
-  GameScene.cpp
+﻿  GameScene.cpp
 C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
 C:\Users\bigsk\source\repos\CG2\GameScene.cpp(25,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
-  main.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Model.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-C:\Users\bigsk\source\repos\CG2\Model.cpp(23,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
-  object3D.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  コードを生成中...
 libfbxsdk-md.lib(fbxdebug.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxdebug.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxalloc.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxalloc.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxstring.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxstring.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -30,8 +18,11 @@ libfbxsdk-md.lib(fbxiosettings.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.
 libfbxsdk-md.lib(fbximporter.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbximporter.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxnode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxnode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxscene.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxscene.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-md.lib(fbxcluster.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxcluster.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxgeometrybase.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxgeometrybase.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-md.lib(fbxgeometry.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxgeometry.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxmesh.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxmesh.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-md.lib(fbxskin.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxskin.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxfiletexture.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxfiletexture.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxsurfacematerial.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxsurfacematerial.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxsurfacelambert.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxsurfacelambert.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -110,11 +101,9 @@ libfbxsdk-md.lib(fbxcachedeffect.obj) : warning LNK4099: PDB '' が 'libfbxsdk-m
 libfbxsdk-md.lib(fbxcamera.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxcamera.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxcamerastereo.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxcamerastereo.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxcameraswitcher.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxcameraswitcher.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxcluster.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxcluster.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxgenericnode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxgenericnode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxlayercontainer.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxlayercontainer.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxshape.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxshape.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxgeometry.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxgeometry.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxgeometryweightedmap.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxgeometryweightedmap.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxlight.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxlight.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxline.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxline.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -128,7 +117,6 @@ libfbxsdk-md.lib(fbxopticalreference.obj) : warning LNK4099: PDB '' が 'libfbxs
 libfbxsdk-md.lib(fbxpatch.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxpatch.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxproceduralgeometry.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxproceduralgeometry.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxskeleton.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxskeleton.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxskin.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxskin.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxsubdiv.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxsubdiv.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxtrimnurbssurface.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxtrimnurbssurface.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-md.lib(fbxvertexcachedeformer.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxvertexcachedeformer.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。

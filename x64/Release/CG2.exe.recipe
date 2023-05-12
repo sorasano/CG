@@ -7,6 +7,18 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\FBXPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\FBXVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\BasicVS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ObjPixel.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -19,19 +31,10 @@
       <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ParticlePS.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleVS.cso</FullPath>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\SpritePixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\BasicVS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\SpritePS.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\SpriteVS.cso</FullPath>
+      <FullPath>C:\Users\bigsk\source\repos\CG2\x64\Release\SpriteVertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
