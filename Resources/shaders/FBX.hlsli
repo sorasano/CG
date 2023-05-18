@@ -1,3 +1,11 @@
+//ボーンの最大数
+static const int MAX_BONES = 32;
+
+cbuffer skinning:register(b3)//ボーンのスキニング情報が入る
+{
+	matrix matSkinning[MAX_BONES];
+};
+
 cbuffer cbuff0 : register(b0)
 {
 	matrix viewproj;	//ビュープロジェクション行列
@@ -22,12 +30,4 @@ struct VSOutput
 	float3 normal : NORMAL;	//法線
 	float2 uv : TEXCOORD;	//uv値
 
-};
-
-//ボーンの最大数
-static const int MAX_BONES = 32;
-
-cbuffer skinning:register(b3)//ボーンのスキニング情報が入る
-{
-	matrix matSkinning[MAX_BONES];
 };

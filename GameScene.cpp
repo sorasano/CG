@@ -54,6 +54,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	fbxObject2 = new FbxObject3D;
 	fbxObject2->Initialize();
 	fbxObject2->SetModel(fbxModel2);
+	fbxObject2->PlayAnimation();
 
 	//3dƒ‚ƒfƒ‹
 	//----------‹…----------

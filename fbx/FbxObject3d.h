@@ -1,6 +1,5 @@
 #pragma once
 #include "FbxModel.h"
-#include "FbxModel.h"
 #include "Camera.h"
 
 #include <windows.h>
@@ -67,6 +66,9 @@ public://メンバ関数
 	//モデルのセット
 	void SetModel(FbxModel* model) { this->model = model; }
 
+	//アニメーション開始
+	void PlayAnimation();
+
 protected://メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource>constBuffTransform;
@@ -86,5 +88,15 @@ private:
 	//モデル
 	FbxModel* model = nullptr;
 
+	//1フレームの時間
+	FbxTime frameTime;
+	//アニメーション開始時間
+	FbxTime startTime;
+	//アニメーション終了時間
+	FbxTime endTime;
+	//現在時間
+	FbxTime currentTime;
+	//アニメーション再生中
+	bool isPlay = false;
 };
 
