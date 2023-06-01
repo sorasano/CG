@@ -55,6 +55,10 @@ public:
 	//指定番号のテクスチャバッファを取得
 	ID3D12Resource* GetTextureBuffer(uint32_t index)const { return Texture::texBuffuers[index].Get(); }
 
+	//ポストエフェクト用
+	void PostEffectBeginDraw();
+	void PostEffectSetTextureCommand(uint32_t index);
+
 private:
 	//スプライト用パイプラインステートとルートシグネチャの生成
 	void CreatePipeline2D(ID3D12Device* dev);

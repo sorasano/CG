@@ -6,6 +6,7 @@ using namespace Microsoft::WRL;
 #pragma comment(lib, "d3dcompiler.lib")
 #include"GpPipeline.h"
 #include"Texture.h"
+#include "PostEffect.h"
 
 std::string SpriteManager::defaultTextureDirectoryPath = "";
 
@@ -51,6 +52,17 @@ void SpriteManager::beginDraw()
 
 }
 
+void SpriteManager::PostEffectBeginDraw()
+{
+	//パイプラインステートの設定
+	directX->GetCommandList()->SetPipelineState(pipelineState.Get());
+	//ルートシグネチャの設定
+	directX->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	//プリミティブ形状の設定
+	directX->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+}
+
 void SpriteManager::SetTextureCommand(uint32_t index) {
 	//SRVヒープの先頭ハンドル取得
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = Texture::descHeap->GetGPUDescriptorHandleForHeapStart();
@@ -61,6 +73,16 @@ void SpriteManager::SetTextureCommand(uint32_t index) {
 	directX->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 }
+
+void SpriteManager::PostEffectSetTextureCommand(uint32_t index)
+{
+	//SRVヒープの先頭ハンドル取得
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = Texture::descHeap->GetGPUDescriptorHandleForHeapStart();
+
+	UINT incrementSize = directX->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	srvGpuHandle.ptr += incrementSize * index;
+}
+
 
 void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 {
