@@ -75,14 +75,14 @@ public:
 	~Object3D();
 	void Initialize(DirectXCommon* dx,Model* model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
-	void Draw(D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView);
+	void Draw();
 	//ゲッター　セッター　
 	XMFLOAT3 GetPosition() { return position; };
 	XMFLOAT3 GetRotation() { return rotation; };
 	XMFLOAT3 GetScale() { return scale; };
-	void setPosition(XMFLOAT3 pos);
-	void setRotation(XMFLOAT3 rot);
-	void setScale(XMFLOAT3 sca);
+	void SetPosition(XMFLOAT3 pos);
+	void SetRotation(XMFLOAT3 rot);
+	void SetScale(XMFLOAT3 sca);
 public:
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0

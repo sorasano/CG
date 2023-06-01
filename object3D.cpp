@@ -148,7 +148,7 @@ void Object3D::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	constBuffB1->Unmap(0, nullptr);
 }
 
-void Object3D::Draw(D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView)
+void Object3D::Draw()
 {
 	this->cmdList = dx->GetCommandList();
 	// パイプラインステートの設定
@@ -158,9 +158,9 @@ void Object3D::Draw(D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ib
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// 頂点バッファの設定
-	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	cmdList->IASetVertexBuffers(0, 1, &model->vbView);
 	// インデックスバッファの設定
-	cmdList->IASetIndexBuffer(&ibView);
+	cmdList->IASetIndexBuffer(&model->ibView);
 
 	// デスクリプタヒープの配列
 	ID3D12DescriptorHeap* ppHeaps[] = { model->GetDescHeap().Get()};
@@ -177,19 +177,20 @@ void Object3D::Draw(D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ib
 	cmdList->SetGraphicsRootDescriptorTable(2, srvGpuHandle);
 	// 描画コマンド
 	cmdList->DrawIndexedInstanced(model->GetIndicesSize(), 1, 0, 0, 0);
+
 }
 
-void Object3D::setPosition(XMFLOAT3 pos)
+void Object3D::SetPosition(XMFLOAT3 pos)
 {
 	position = pos;
 }
 
-void Object3D::setRotation(XMFLOAT3 rot)
+void Object3D::SetRotation(XMFLOAT3 rot)
 {
 	rotation = rot;
 }
 
-void Object3D::setScale(XMFLOAT3 sca)
+void Object3D::SetScale(XMFLOAT3 sca)
 {
 	scale = sca;
 }

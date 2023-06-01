@@ -32,16 +32,16 @@ void Player::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 
 
 
-	object3d_->setPosition(position_);
-	object3d_->setRotation(rotation_);
-	object3d_->setScale(scale_);
+	object3d_->SetPosition(position_);
+	object3d_->SetRotation(rotation_);
+	object3d_->SetScale(scale_);
 	//オブジェクト更新
-	object3d_->Update(matView, matProjection);
+	//object3d_->Update();
 }
 
 void Player::Draw()
 {
-	object3d_->Draw(model_->vbView, model_->ibView);
+	object3d_->Draw();
 }
 
 void Player::setPosition(XMFLOAT3 pos)

@@ -1,2 +1,7 @@
-﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Debug\FBXVS.cso
+﻿  GameScene.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\fbx\FbxObject3d.h(69,70): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\fbx\FbxObject3d.h(69,114): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\fbx\FbxObject3d.h(69,158): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\bigsk\source\repos\CG2\GameScene.cpp(26,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe

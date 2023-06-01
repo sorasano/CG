@@ -19,7 +19,7 @@ Model* Model::GetInstance()
 
 void Model::Initialize(DirectXCommon* dx_, const std::string& filename, const std::string& resourcename)
 {
-	dx = dx_;
+	this->dx = dx_;
 	HRESULT result;
 
 	//デスクリプタ初期化
@@ -34,7 +34,7 @@ void Model::Initialize(DirectXCommon* dx_, const std::string& filename, const st
 
 	////テクスチャ読み込み
 	LoadTexture(resourcename);
-	
+
 
 }
 
@@ -531,5 +531,3 @@ void Model::LoadTexture(const std::string& resourcename)
 	textureIndex = 0;
 
 }
-
-

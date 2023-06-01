@@ -9,6 +9,8 @@
 #include <DirectXMath.h>
 #include <string.h>
 
+#define PI 3.1415
+
 class FbxObject3D
 {
 public: //定数
@@ -62,6 +64,11 @@ public://メンバ関数
 	void Update();
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	//セッター
+	void SetRotation(XMFLOAT3 rotation) { this->rotation.x = rotation.x * (PI / 180), this->rotation.y = rotation.y * (PI / 180), this->rotation.z = rotation.z * (PI / 180);}
+	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 
 	//モデルのセット
 	void SetModel(FbxModel* model) { this->model = model; }

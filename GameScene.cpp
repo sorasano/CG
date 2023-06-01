@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "JsonLoader.h"
 
 GameScene::GameScene()
 {
@@ -33,50 +34,34 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	camera->SetTarget({0,0,0});
 	camera->SetEye({ 0,0,30 });
 
+
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon->GetDevice());
 	FbxObject3D::SetCamera(camera);
 	//グラフィックスパイプライン生成
 	FbxObject3D::CreateGraphicsPipeline();
 
-	//モデル名を指定してファイル読み込み
-	fbxModel1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
-
-	//3dオブジェクト生成とモデルのセット
-	fbxObject1 = new FbxObject3D;
-	fbxObject1->Initialize();
-	fbxObject1->SetModel(fbxModel1);
-
-	//モデル名を指定してファイル読み込み
-	fbxModel2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-
-	//3dオブジェクト生成とモデルのセット
-	fbxObject2 = new FbxObject3D;
-	fbxObject2->Initialize();
-	fbxObject2->SetModel(fbxModel2);
-	fbxObject2->PlayAnimation();
-
 	//3dモデル
 	//----------球----------
-	//球オブジェクトのモデル初期化
-	Model* newSphereModel = new Model();
-	newSphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/white1×1.png");
-	sphereModel_.reset(newSphereModel);
+	////球オブジェクトのモデル初期化
+	//Model* newSphereModel = new Model();
+	//newSphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/white1×1.png");
+	//sphereModel_.reset(newSphereModel);
 
-	//球オブジェクト初期化
-	Sphere* newSphere = new Sphere();
-	newSphere->Initialize(dxCommon, sphereModel_.get());
-	sphere_.reset(newSphere);
+	////球オブジェクト初期化
+	//Sphere* newSphere = new Sphere();
+	//newSphere->Initialize(dxCommon, sphereModel_.get());
+	//sphere_.reset(newSphere);
 
-	//球オブジェクトのモデル初期化
-	Model* newSphereRedModel = new Model();
-	newSphereRedModel->Initialize(dxCommon, "sphere", "Resources/sphere/red1x1.png");
-	sphereRedModel_.reset(newSphereRedModel);
+	////球オブジェクトのモデル初期化
+	//Model* newSphereRedModel = new Model();
+	//newSphereRedModel->Initialize(dxCommon, "sphere", "Resources/sphere/red1x1.png");
+	//sphereRedModel_.reset(newSphereRedModel);
 
-	//球オブジェクト初期化
-	Sphere* newRedSphere = new Sphere();
-	newRedSphere->Initialize(dxCommon, sphereRedModel_.get());
-	sphereRed_.reset(newRedSphere);
+	////球オブジェクト初期化
+	//Sphere* newRedSphere = new Sphere();
+	//newRedSphere->Initialize(dxCommon, sphereRedModel_.get());
+	//sphereRed_.reset(newRedSphere);
 
 	//---------地面-----------
 
@@ -113,165 +98,240 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	//newPlayer->Initialize(dxCommon, playerModel_.get());
 	//player_.reset(newPlayer);
 
-	//当たり判定
+	// モデル読み込み
+	planeModel = new Model;
+	sphereModel = new Model;
+	enemyModel = new Model;
 
-	////球
-	sphere_->sphereCol.radius = 1;
-	sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
+	planeModel->Initialize(dxCommon, "plane", "Resources/plane/white1×1.png");
+	sphereModel->Initialize(dxCommon, "sphere", "Resources/sphere/red1x1.png");
+	enemyModel->Initialize(dxCommon, "enemy", "Resources/enemy/black1x1.png");
 
-	//スプライト生成
-	//---test1---
-	test1Texture = Texture::LoadTexture(L"Resources/reimu.png");
+	models.insert(std::make_pair("plane", planeModel));
+	models.insert(std::make_pair("sphere", sphereModel));
+	models.insert(std::make_pair("enemy", enemyModel));
 
-	test1Sprite = new Sprite();
-	test1Sprite->Initialize(test1Texture);
-	//アンカーポイントをスプライトの中心に
-	test1Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	test1Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
-	test1Sprite->Update();
+	// レベルデータの読み込み
+	levelData = JsonLoader::LoadFile("test");
 
-	//---test2---
-	test2Texture = Texture::LoadTexture(L"Resources/texture.jpg");
+	// レベルデータからオブジェクトを生成、配置
+	for (auto& objectData : levelData->objects) {
+		// ファイル名から登録済みモデルを検索
+		Model* model = nullptr;
+		decltype(models)::iterator it = models.find(objectData.fileName);
+		if (it != models.end()) {
+			model = it->second;
+		}
 
-	test2Sprite = new Sprite();
-	test2Sprite->Initialize(test2Texture);
-	//アンカーポイントをスプライトの中心に
-	test2Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	test2Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	test2Sprite->Update();
+		// モデルを指定して3Dオブジェクトを生成
+		Object3D* newObject = new Object3D;
+		newObject->Initialize(dxCommon_,model);
 
-	//パーティクル1
+		// 座標
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMStoreFloat3(&pos, objectData.translation);
+		newObject->SetPosition(pos);
 
-	// パーティクル静的初期化
-	ParticleManager::StaticInitialize(dxCommon, WinApp::winW, WinApp::winH);
+		// 回転角
+		DirectX::XMFLOAT3 rot;
+		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		newObject->SetRotation(rot);
 
+		// 座標
+		DirectX::XMFLOAT3 scale;
+		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		newObject->SetScale(scale);
 
-	particle1 = new ParticleManager();
-	//パーティクル生成
-	particle1->Initialize("Resources/effect1.png");
-
-	for (int i = 0; i < 100; i++) {
-		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-		const float md_pos = 10.0f;
-		XMFLOAT3 pos{};
-		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-
-		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
-		const float md_vel = 0.1f;
-		XMFLOAT3 vel{};
-		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-
-		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		XMFLOAT3 acc{};
-		const float md_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * md_acc;
-
-		//追加
-		particle1->Add(600, pos, vel, acc);
-
+		// 配列に登録
+		objects.push_back(newObject);
 	}
 
-	particle1->Update();
+	////モデル名を指定してファイル読み込み
+	fbxModel1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+
+	////3dオブジェクト生成とモデルのセット
+	//fbxObject1 = new FbxObject3D;
+	//fbxObject1->Initialize();
+	//fbxObject1->SetModel(fbxModel1);
+	//fbxObject1->SetScale({ 0.01,0.01,0.01});
+
+	////モデル名を指定してファイル読み込み
+	fbxModel2 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+
+	//3dオブジェクト生成とモデルのセット
+	fbxObject2 = new FbxObject3D;
+	fbxObject2->Initialize();
+	fbxObject2->SetModel(fbxModel2);
+	fbxObject2->SetRotation({0,90,0});
+	fbxObject2->PlayAnimation();
 
 
-	particle2 = new ParticleManager();
-	//パーティクル生成
-	particle2->Initialize("Resources/effect2.png");
+	////当たり判定
 
-	for (int i = 0; i < 100; i++) {
-		//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-		const float md_pos = 10.0f;
-		XMFLOAT3 pos{};
-		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+	////////球
+	////sphere_->sphereCol.radius = 1;
+	////sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
 
-		//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
-		const float md_vel = 0.1f;
-		XMFLOAT3 vel{};
-		vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-		vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-		vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+	////-----スプライト生成-----
+	////---test1---
+	//test1Texture = Texture::LoadTexture(L"Resources/reimu.png");
 
-		//重力に見立ててYのみ[-0.001f,0]でランダムに分布
-		XMFLOAT3 acc{};
-		const float md_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * md_acc;
+	//test1Sprite = new Sprite();
+	//test1Sprite->Initialize(test1Texture);
+	////アンカーポイントをスプライトの中心に
+	//test1Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//test1Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	//test1Sprite->Update();
 
-		//追加
-		particle2->Add(600, pos, vel, acc);
+	////---test2---
+	//test2Texture = Texture::LoadTexture(L"Resources/texture.jpg");
 
-	}
+	//test2Sprite = new Sprite();
+	//test2Sprite->Initialize(test2Texture);
+	////アンカーポイントをスプライトの中心に
+	//test2Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//test2Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
+	//test2Sprite->Update();
 
-	particle2->Update();
+	////パーティクル1
+
+	//// パーティクル静的初期化
+	//ParticleManager::StaticInitialize(dxCommon, WinApp::winW, WinApp::winH);
+
+
+	//particle1 = new ParticleManager();
+	////パーティクル生成
+	//particle1->Initialize("Resources/effect1.png");
+
+	//for (int i = 0; i < 100; i++) {
+	//	//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+	//	const float md_pos = 10.0f;
+	//	XMFLOAT3 pos{};
+	//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+	//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+	//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+	//	//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+	//	const float md_vel = 0.1f;
+	//	XMFLOAT3 vel{};
+	//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+	//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+	//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+	//	//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+	//	XMFLOAT3 acc{};
+	//	const float md_acc = 0.001f;
+	//	acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+	//	//追加
+	//	particle1->Add(600, pos, vel, acc);
+
+	//}
+
+	//particle1->Update();
+
+
+	//particle2 = new ParticleManager();
+	////パーティクル生成
+	//particle2->Initialize("Resources/effect2.png");
+
+	//for (int i = 0; i < 100; i++) {
+	//	//X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+	//	const float md_pos = 10.0f;
+	//	XMFLOAT3 pos{};
+	//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+	//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+	//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+
+	//	//X,Y,Zすべて[-0.05f,+0.05f]でランダムに分布
+	//	const float md_vel = 0.1f;
+	//	XMFLOAT3 vel{};
+	//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+	//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+	//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+
+	//	//重力に見立ててYのみ[-0.001f,0]でランダムに分布
+	//	XMFLOAT3 acc{};
+	//	const float md_acc = 0.001f;
+	//	acc.y = -(float)rand() / RAND_MAX * md_acc;
+
+	//	//追加
+	//	particle2->Add(600, pos, vel, acc);
+
+	//}
+
+	//particle2->Update();
 }
 
 void GameScene::Update()
 {
 	//射影変換
 
-	//カメラ更新
+	////カメラ更新
 	camera->Update();
 
-	//----球----
+	////----球----
 
-	//平行移動更新
+	////平行移動更新
 
-	if (input_->PushKey(DIK_UP) || input_->PushKey(DIK_DOWN) || input_->PushKey(DIK_RIGHT) || input_->PushKey(DIK_LEFT)) {
+	//if (input_->PushKey(DIK_UP) || input_->PushKey(DIK_DOWN) || input_->PushKey(DIK_RIGHT) || input_->PushKey(DIK_LEFT)) {
 
-		//座標を移動する処理(Z座標)
-		if (input_->PushKey(DIK_UP)) { position_.y += 0.1f; }
-		else if (input_->PushKey(DIK_DOWN)) { position_.y -= 0.1f; }
-		if (input_->PushKey(DIK_RIGHT)) { position_.x -= 0.1f; }
-		else if (input_->PushKey(DIK_LEFT)) { position_.x += 0.1f; }
+	//	//座標を移動する処理(Z座標)
+	//	if (input_->PushKey(DIK_UP)) { position_.y += 0.1f; }
+	//	else if (input_->PushKey(DIK_DOWN)) { position_.y -= 0.1f; }
+	//	if (input_->PushKey(DIK_RIGHT)) { position_.x -= 0.1f; }
+	//	else if (input_->PushKey(DIK_LEFT)) { position_.x += 0.1f; }
 
-	}
+	//}
 
-	sphere_->setPosition(position_);
-	sphere_->setRotation(XMFLOAT3(0, 0, 0));
-	/*	sphere_->setScale(XMFLOAT3(1, 100, 100));*/
+	//sphere_->setPosition(position_);
+	//sphere_->setRotation(XMFLOAT3(0, 0, 0));
+	///*	sphere_->setScale(XMFLOAT3(1, 100, 100));*/
 
-	sphere_->Update(camera->matView, camera->matProjection);
+	//sphere_->Update(camera->matView, camera->matProjection);
 
-	sphereRed_->setPosition(XMFLOAT3(position_.x + 3, position_.y, position_.z));
-	sphereRed_->Update(camera->matView, camera->matProjection);
+	//sphereRed_->setPosition(XMFLOAT3(position_.x + 3, position_.y, position_.z));
+	//sphereRed_->Update(camera->matView, camera->matProjection);
 
-	//plane_->Update(matView, matProjection);
+	////plane_->Update(matView, matProjection);
 
-	sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
+	//sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
 
-	//hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
+	////hit = Collision::CheckSphere2Plane(sphere_->sphereCol,plane_->planeCol);
 
 
-	//fbx
-	fbxObject1->Update();
+	////fbx
+	//fbxObject1->Update();
 	fbxObject2->Update();
 
-	//----パーティクル----
-	particle1->Update();
-	particle2->Update();
+	////----パーティクル----
+	//particle1->Update();
+	//particle2->Update();
 
+	for (auto& object : objects) {
+		object->Update(camera->matView, camera->matProjection);
+	}
 }
 
 void GameScene::Draw()
 {
 
 	////-------背景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	//SpriteManager::GetInstance()->beginDraw();
 
 	//sphere_->Draw();
 	//sphereRed_->Draw();
 
+	for (auto& object : objects) {
+		object->Draw();
+	}
+
 	//fbxObject1->Draw(dxCommon_->GetCommandList());
-	fbxObject2->Draw(dxCommon_->GetCommandList());
+	//fbxObject2->Draw(dxCommon_->GetCommandList());
 
 
-	////-------前景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	//////-------前景スプライト描画処理-------//
+	//SpriteManager::GetInstance()->beginDraw();
 
 	//----パーティクル----
 	//particle1->Draw();

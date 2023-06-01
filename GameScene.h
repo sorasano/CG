@@ -16,6 +16,10 @@
 #include "Sphere.h"
 #include "Plane.h"
 
+#include <map>
+
+struct LevelData;
+
 class GameScene
 {
 public:
@@ -45,6 +49,17 @@ private:
 
 	std::unique_ptr<Model> sphereRedModel_;
 	std::unique_ptr<Sphere> sphereRed_;
+
+	//マップ配置
+
+	LevelData* levelData = nullptr;
+
+	Model* planeModel = nullptr;
+	Model* sphereModel = nullptr;
+	Model* enemyModel = nullptr;
+
+	std::map<std::string, Model*> models;
+	std::vector<Object3D*> objects;
 
 	//Fbx
 	FbxModel* fbxModel1 = nullptr;
@@ -82,6 +97,5 @@ private:
 
 	//当たり判定
 	bool hit;
-
 };
 

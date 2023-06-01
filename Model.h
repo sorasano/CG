@@ -57,9 +57,9 @@ public:
 	};
 public:
 	//シングルトンインスタンス
-	Model *GetInstance();
+	Model* GetInstance();
 	//初期化			dxCommon,			objとmtlが入ってるファイルの名前,	貼り付ける画像の名前
-	void Initialize(DirectXCommon* dx_, const std::string& filename , const std::string& resourcename);
+	void Initialize(DirectXCommon* dx_, const std::string& filename, const std::string& resourcename);
 
 	void InitializeVertex(const std::string& filename);	//頂点初期化
 	void InitializeDesc();	//デスクリプタ初期化
@@ -93,7 +93,7 @@ private:
 		XMFLOAT3 pos;	//座標
 		XMFLOAT3 normalize;	//法線ベクトル
 		XMFLOAT2 uv;	//uv座標
-		XMFLOAT4 color = {1,0,0,1};
+		XMFLOAT4 color = { 1,0,0,1 };
 		Vertex* parent = nullptr;
 	};
 
@@ -129,4 +129,3 @@ private:
 	// シェーダリソースビューのハンドル(CPU)
 	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
 };
-

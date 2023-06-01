@@ -106,6 +106,12 @@ void Camera::UpdateEye()
 		eye.y -= 1;
 	}
 
+	if (input->PushKey(DIK_E)) {
+		eye.z += 1;
+	}
+	if (input->PushKey(DIK_Q)) {
+		eye.z -= 1;
+	}
 }
 
 void Camera::UpdateTarget()

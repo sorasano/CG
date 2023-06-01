@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)fbx;$(SolutionDir)Math;$(SolutionDir)DirectXTex;$(SolutionDir)Base;$(ProjectDir)lib\fbx_sdk\include;$(SolutionDir)</IncludePath>
+    <IncludePath>$(SolutionDir)fbx;$(SolutionDir)Math;$(SolutionDir)DirectXTex;$(SolutionDir)Base;$(ProjectDir)lib\fbx_sdk\include;$(SolutionDir);$(SolutionDir)\2d</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)fbx;$(SolutionDir)Math;$(SolutionDir)DirectXTex;$(SolutionDir)Base;$(ProjectDir)lib\fbx_sdk\include;$(SolutionDir)</IncludePath>
+    <IncludePath>$(SolutionDir)fbx;$(SolutionDir)Math;$(SolutionDir)DirectXTex;$(SolutionDir)Base;$(ProjectDir)lib\fbx_sdk\include;$(SolutionDir);$(SolutionDir)\2d</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -148,6 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2d\Sprite.cpp" />
+    <ClCompile Include="2d\SpriteManager.cpp" />
+    <ClCompile Include="2d\Texture.cpp" />
     <ClCompile Include="Base\DirectXCommon.cpp" />
     <ClCompile Include="Base\GpPipeline.cpp" />
     <ClCompile Include="Base\Input.cpp" />
@@ -159,6 +162,7 @@
     <ClCompile Include="fbx\FbxModel.cpp" />
     <ClCompile Include="fbx\FbxObject3d.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="JsonLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\Easing.cpp" />
     <ClCompile Include="Math\Random.cpp" />
@@ -168,10 +172,9 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
@@ -236,6 +239,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2d\PostEffect.h" />
+    <ClInclude Include="2d\Sprite.h" />
+    <ClInclude Include="2d\SpriteManager.h" />
+    <ClInclude Include="2d\Texture.h" />
     <ClInclude Include="Base\DirectXCommon.h" />
     <ClInclude Include="Base\GpPipeline.h" />
     <ClInclude Include="Base\Input.h" />
@@ -247,6 +254,8 @@
     <ClInclude Include="fbx\FbxModel.h" />
     <ClInclude Include="fbx\FbxObject3d.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonLoader.h" />
     <ClInclude Include="Math\Easing.h" />
     <ClInclude Include="Math\Random.h" />
     <ClInclude Include="Math\Vector3.h" />
@@ -256,9 +265,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
