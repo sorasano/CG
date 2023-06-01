@@ -78,8 +78,10 @@ public:	//メンバ変数
 
 public: //メンバ関数
 	void Initialize(uint32_t textureNum = UINT32_MAX);
-
+	void Update();
 	void Draw();
+
+	//セッター
 	void SetColor(const DirectX::XMFLOAT4& color_) { color = color_; }
 	void SetPos(const DirectX::XMFLOAT2& pos) { position = pos; }
 	void SetRotation(float rotation) { this->rotation = rotation; }
@@ -92,6 +94,7 @@ public: //メンバ関数
 	void SetTextureLeftTop(const DirectX::XMFLOAT2& leftTop) { textureLeftTop = leftTop; }
 	void SetTextureSize(const DirectX::XMFLOAT2& size) { textureSize = size; }
 
+	//ゲッター
 	const DirectX::XMFLOAT2& GetPosition()const { return position; }
 	float GetRotation()const { return rotation; }
 	const DirectX::XMFLOAT4 GetColor()const { return color; }
@@ -103,8 +106,6 @@ public: //メンバ関数
 	uint32_t GetTextureNum()const { return textureIndex; }
 	const DirectX::XMFLOAT2 GetTextureLeftTop()const { return textureLeftTop; }
 	const DirectX::XMFLOAT2 GetTextureSize()const { return textureSize; }
-
-	void Update();
 
 	//演出
 

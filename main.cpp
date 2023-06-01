@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include "GameScene.h"
+#include "PostEffect.h"
 
 // ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
@@ -58,6 +59,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	gameScene = new GameScene();
 	gameScene->Initialize(dxCommon, input);
 
+	//ポストエフェクト
+	PostEffect* postEffect = nullptr;
+	//ポストエフェクト用テクスチャ読み込み
+	uint32_t postEffectTexture = Texture::LoadTexture(L"Resources/white1x1.png");
+	//ポストエフェクト初期化
+	postEffect = new PostEffect();
+	postEffect->Initialize(postEffectTexture);
+	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	postEffect->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	postEffect->SetSize(XMFLOAT2(100,100));
+	postEffect->Update();
+
 	//描画初期化処理　ここまで
 
 	// ゲームループ
@@ -78,8 +91,12 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//描画前処理
 		dxCommon->PreDraw();
 
-		//描画
-		gameScene->Draw();
+		//ポストエフェクト
+		SpriteManager::GetInstance()->beginDraw();
+		postEffect->Draw();
+
+		//ゲームシーン描画
+		//gameScene->Draw();
 
 		//描画後処理
 		dxCommon->PostDraw();
@@ -98,6 +115,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	//gamescene解放
 	delete gameScene;
+
+	//ポストエフェクト解放
+	delete postEffect;
 
 	//fbxLoader解放
 	FbxLoader::GetInstance()->Finalize();
