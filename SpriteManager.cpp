@@ -93,7 +93,7 @@ void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"shaders/SpriteVertexShader.hlsl", // シェーダファイル名
+		L"Resources/shaders/SpriteVertexShader.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -116,7 +116,7 @@ void SpriteManager::CreatePipeline2D(ID3D12Device* dev)
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"shaders/SpritePixelShader.hlsl", // シェーダファイル名
+		L"Resources/shaders/SpritePixelShader.hlsl", // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定

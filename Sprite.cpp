@@ -129,6 +129,7 @@ void Sprite::Draw()
 
 	Update();
 
+
 	//頂点バッファビューの設定
 	spriteManager->directX->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 	//定数バッファビュー
