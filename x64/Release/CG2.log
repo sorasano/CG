@@ -1,63 +1,61 @@
-﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\FBXPS.cso
-  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\FBXVS.cso
-  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso
+﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicPS.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\BasicVS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\FBXPS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\FBXVS.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjPixel.cso
-C:\Users\bigsk\source\repos\CG2\shaders\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
-C:\Users\bigsk\source\repos\CG2\shaders\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
-C:\Users\bigsk\source\repos\CG2\shaders\ObjVertex.hlsl(3,13-80): warning X3578: 'main': Top-level return value is not completely initialized
-C:\Users\bigsk\source\repos\CG2\shaders\ObjVertex.hlsl(3,13-80): warning X3578: Output value 'main' is not completely initialized
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\ObjVertex.hlsl(3,13-80): warning X3578: Output value 'main' is not completely initialized
   
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ObjVertex.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleGS.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticlePS.cso
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\ParticleVS.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpritePixelShader.cso
   compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Release\SpriteVertexShader.cso
+  PostEffect.cpp
   DirectXCommon.cpp
   GpPipeline.cpp
-C:\Users\bigsk\source\repos\CG2\Base\GpPipeline.cpp(78,51): warning C4267: '=': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Base\GpPipeline.cpp(78,49): warning C4267: '=': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   Input.cpp
   WinApp.cpp
   Camera.cpp
   Collision.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   CollisionPrimitive.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   FbxLoader.cpp
   FbxModel.cpp
-C:\Users\bigsk\source\repos\CG2\fbx\FbxModel.cpp(19,82): warning C4267: '初期化中': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\fbx\FbxModel.cpp(19,14): warning C4267: '初期化中': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   FbxObject3d.cpp
   GameScene.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
 C:\Users\bigsk\source\repos\CG2\GameScene.cpp(25,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
   main.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   Easing.cpp
 C:\Users\bigsk\source\repos\CG2\Math\Easing.cpp(12,15): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
 C:\Users\bigsk\source\repos\CG2\Math\Easing.cpp(26,14): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
   Random.cpp
   Vector3.cpp
   Model.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
 C:\Users\bigsk\source\repos\CG2\Model.cpp(23,10): warning C4101: 'result': ローカル変数は 1 度も使われていません。
   object3D.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   ParticleManager.cpp
   Plane.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  Player.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   コンパイル中...
+  Player.cpp
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   Sphere.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
   Sprite.cpp
   SpriteManager.cpp
   Texture.cpp
   コード生成しています。
+  Previous IPDB was built with incompatible compiler, fall back to full compilation.
 C:\Users\bigsk\source\repos\CG2\Texture.cpp(158): warning C4715: 'Texture::LoadTexture': 値を返さないコントロール パスがあります。
-  1059 of 1850 functions (57.2%) were compiled, the rest were copied from previous compilation.
-    605 functions were new in current compilation
-    101 functions had inline decision re-evaluated but remain unchanged
+  All 1868 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
 libfbxsdk-mt.lib(fbxalloc.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxalloc.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxaffinematrix.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxaffinematrix.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -83,6 +81,9 @@ libfbxsdk-mt.lib(fbxpropertyhandle.obj) : warning LNK4099: PDB '' が 'libfbxsdk
 libfbxsdk-mt.lib(fbxnode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxnode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxcluster.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxcluster.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxobject.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxobject.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-mt.lib(fbxanimstack.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxanimstack.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-mt.lib(fbxdocument.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdocument.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-mt.lib(fbxtime.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxtime.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxmath.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxmath.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxquaternion.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxquaternion.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxemitter.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxemitter.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -99,7 +100,6 @@ libfbxsdk-mt.lib(fbxblendshapechannel.obj) : warning LNK4099: PDB '' が 'libfbx
 libfbxsdk-mt.lib(fbxanimcurvenode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxanimcurvenode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxdatatypes.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdatatypes.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxgeometryweightedmap.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxgeometryweightedmap.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-mt.lib(fbxanimstack.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxanimstack.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxanimlayer.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxanimlayer.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxpropertytypes.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxpropertytypes.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxpropertydef.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxpropertydef.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -109,7 +109,6 @@ libfbxsdk-mt.lib(fbxutils.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(f
 libfbxsdk-mt.lib(fbxthread.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxthread.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxtakeinfo.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxtakeinfo.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxdocumentinfo.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdocumentinfo.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-mt.lib(fbxdocument.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdocument.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxaxissystem.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxaxissystem.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxio.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxio.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxiopluginregistry.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxiopluginregistry.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -154,7 +153,6 @@ libfbxsdk-mt.lib(fbxcameraswitcher.obj) : warning LNK4099: PDB '' が 'libfbxsdk
 libfbxsdk-mt.lib(fbxopticalreference.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxopticalreference.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxlodgroup.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxlodgroup.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxmediaclip.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxmediaclip.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-mt.lib(fbxtime.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxtime.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxmatrix.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxmatrix.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxplugin.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxplugin.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxplugincontainer.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxplugincontainer.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -220,6 +218,7 @@ libfbxsdk-mt.lib(fbxanimcurvefilterunroll.obj) : warning LNK4099: PDB '' が 'li
 libfbxsdk-mt.lib(fbxanimcurvefiltermatrixconverter.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxanimcurvefiltermatrixconverter.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxdeformationsevaluator.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdeformationsevaluator.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxevents.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxevents.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+libfbxsdk-mt.lib(fbxtimecode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxtimecode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxdependencieshelper.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxdependencieshelper.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(kfcurvenode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(kfcurvenode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(kdatatypes.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(kdatatypes.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
@@ -229,7 +228,6 @@ libfbxsdk-mt.lib(fbxobjectscontainer.obj) : warning LNK4099: PDB '' が 'libfbxs
 libfbxsdk-mt.lib(fbxlimitsutilities.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxlimitsutilities.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxrootnodeutility.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxrootnodeutility.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxfolder.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxfolder.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-mt.lib(fbxtimecode.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxtimecode.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxwriter.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxwriter.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxbase64coder.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxbase64coder.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 libfbxsdk-mt.lib(fbxchainedfile.obj) : warning LNK4099: PDB '' が 'libfbxsdk-mt.lib(fbxchainedfile.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。

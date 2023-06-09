@@ -66,9 +66,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//ポストエフェクト初期化
 	postEffect = new PostEffect();
 	postEffect->Initialize(postEffectTexture);
-	postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	postEffect->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
-	postEffect->SetSize(XMFLOAT2(100,100));
+	//postEffect->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//postEffect->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	postEffect->SetSize(XMFLOAT2(300,300));
 	postEffect->Update();
 
 	//描画初期化処理　ここまで
@@ -88,15 +88,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//更新
 		gameScene->Update();
 
+
+		//レンダーテクスチャへの描画
+		postEffect->PreDrawScene(dxCommon->GetCommandList());
+		gameScene->Draw();
+		postEffect->PostDrawScene(dxCommon->GetCommandList());
+
+
 		//描画前処理
 		dxCommon->PreDraw();
 
 		//ポストエフェクト
 		SpriteManager::GetInstance()->PostEffectBeginDraw();
 		postEffect->Draw();
-
-		//ゲームシーン描画
-		//gameScene->Draw();
 
 		//描画後処理
 		dxCommon->PostDraw();
