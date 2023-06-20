@@ -1,4 +1,7 @@
 #include "PostEffect.h"
+using namespace Microsoft::WRL;
+using namespace std;
+using namespace DirectX;
 
 //静的メンバ変数の実態
 const float PostEffect::clearColor[4] = { 0.25,0.5,0.1,0.0 };
@@ -14,8 +17,79 @@ void PostEffect::Initialize(uint32_t textureNum)
 	spriteManager = SpriteManager::GetInstance();
 	ComPtr<ID3D12Device> dev = spriteManager->directX->GetDevice();
 
-	//基底クラスとしての初期化
-	Sprite::Initialize(textureNum);
+	//頂点データ
+	VertexPosUv vertices_[] = {
+		//x    y     z   
+		{{  0.0f,100.0f,0.0f},{0.0f,1.0f}},//左下
+		{{  0.0f,  0.0f,0.0f},{0.0f,0.0f}},//左上
+		{{100.0f,100.0f,0.0f},{1.0f,1.0f}},//右下
+		{{100.0f,  0.0f,0.0f},{1.0f,0.0f}},//右上
+	};
+
+	//頂点バッファの設定
+	CD3DX12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+	//リソース設定
+	CD3DX12_RESOURCE_DESC resDesc = CD3DX12_RESOURCE_DESC::Buffer(sizeof(VertexPosUv) * _countof(vertices_));
+	//頂点バッファ生成
+	result = dev->CreateCommittedResource(
+		&heapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&vertBuff));
+	assert(SUCCEEDED(result));
+
+	//頂点バッファへのデータ転送
+	VertexPosUv* vertMap = nullptr;
+	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	if (SUCCEEDED(result)) {
+		memcpy(vertMap, vertices, sizeof(vertices));
+		vertBuff->Unmap(0, nullptr);
+	}
+
+	//頂点バッファビューの作成
+	//GPU仮想アドレス
+	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	//頂点バッファのサイズ
+	vbView.SizeInBytes = sizeof(VertexPosUv) * 4;
+	//頂点１つ分のデータサイズ
+	vbView.StrideInBytes = sizeof(VertexPosUv);
+
+	//定数バッファの設定
+	CD3DX12_HEAP_PROPERTIES cbHeapProp{};
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+	//リソース設定
+	CD3DX12_RESOURCE_DESC cbResDesc =
+		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
+
+	//定数バッファ生成
+	result = dev->CreateCommittedResource(
+		&cbHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&cbResDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&constBuff));
+	assert(SUCCEEDED(result));
+
+	//定数バッファのマッピング
+	result = constBuff->Map(0, nullptr, (void**)&constMap);
+	assert(SUCCEEDED(result));
+
+	//値を書き込むと自動的に転送される
+	constMap->color = XMFLOAT4(1, 1, 1, 1);
+
+	//行列にはとりあえず単位行列を代入
+	constMap->mat = XMMatrixIdentity();
+	constMap->mat.r[0].m128_f32[0] = 2.0f / WinApp::winW;
+	constMap->mat.r[1].m128_f32[1] = -2.0f / WinApp::winH;
+	constMap->mat.r[3].m128_f32[0] = -1.0f;
+	constMap->mat.r[3].m128_f32[1] = 1.0f;
+	matWorld = XMMatrixIdentity();
+	constMap->mat = matWorld;
+
 
 	//テクスチャリソース設定
 	D3D12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
