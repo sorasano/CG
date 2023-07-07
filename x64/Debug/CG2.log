@@ -1,8 +1,2 @@
 ﻿  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Debug\PostEffectTestPS.cso
-  PostEffect.cpp
-libfbxsdk-md.lib(ReadUtil.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(ReadUtil.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(kfcurve.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(kfcurve.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxaxissystem.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxaxissystem.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxfilevicon.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxfilevicon.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-libfbxsdk-md.lib(fbxwriter3ds.obj) : warning LNK4099: PDB '' が 'libfbxsdk-md.lib(fbxwriter3ds.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe
