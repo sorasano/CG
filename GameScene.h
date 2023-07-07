@@ -58,6 +58,9 @@ private:
 
 	//----スプライト----
 
+	//スプライトマネージャー
+	SpriteManager* spriteManager = nullptr;
+
 	//テクスチャ
 	uint32_t test1Texture = 0;		
 	Sprite* test1Sprite = nullptr;

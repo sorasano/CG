@@ -13,7 +13,7 @@ void GpPipeline::SetPipeline(ID3DBlob* vsBlob, ID3DBlob* psBlob, std::vector<D3D
 	//デプスステンシルステートの作成
 	desc.DepthStencilState.DepthEnable = true;	//深度テストを行う
 	desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
-	desc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ合格
+	desc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;	//小さければ合格
 	desc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
 	// シェーダーの設定

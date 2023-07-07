@@ -31,13 +31,18 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	camera->Initialize(eye, target, up, input_);
 
 	camera->SetTarget({0,0,0});
-	camera->SetEye({ 0,0,30 });
+	camera->SetEye({ 30,0,0 });
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon->GetDevice());
 	FbxObject3D::SetCamera(camera);
 	//グラフィックスパイプライン生成
 	FbxObject3D::CreateGraphicsPipeline();
+
+	//スプライトマネージャー
+	SpriteManager::SetDevice(dxCommon->GetDevice());
+	spriteManager = new SpriteManager;
+	spriteManager->Initialize();
 
 	//モデル名を指定してファイル読み込み
 	fbxModel1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
@@ -118,27 +123,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	////球
 	sphere_->sphereCol.radius = 1;
 	sphere_->sphereCol.center = XMVECTOR{ sphere_->GetPosition().x, sphere_->GetPosition().y, sphere_->GetPosition().z,1 };
-
-	//スプライト生成
-	//---test1---
-	test1Texture = Texture::LoadTexture(L"Resources/reimu.png");
-
-	test1Sprite = new Sprite();
-	test1Sprite->Initialize(test1Texture);
-	//アンカーポイントをスプライトの中心に
-	test1Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	test1Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
-	test1Sprite->Update();
-
-	//---test2---
-	test2Texture = Texture::LoadTexture(L"Resources/texture.jpg");
-
-	test2Sprite = new Sprite();
-	test2Sprite->Initialize(test2Texture);
-	//アンカーポイントをスプライトの中心に
-	test2Sprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	test2Sprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	test2Sprite->Update();
 
 	//パーティクル1
 
@@ -260,8 +244,8 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
-	////-------背景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	//////-------背景スプライト描画処理-------//
+	//SpriteManager::GetInstance()->beginDraw();
 
 	//sphere_->Draw();
 	//sphereRed_->Draw();
@@ -270,8 +254,8 @@ void GameScene::Draw()
 	fbxObject2->Draw(dxCommon_->GetCommandList());
 
 
-	////-------前景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	//////-------前景スプライト描画処理-------//
+	//SpriteManager::GetInstance()->beginDraw();
 
 	//----パーティクル----
 	//particle1->Draw();

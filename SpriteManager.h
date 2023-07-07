@@ -1,66 +1,47 @@
 #pragma once
-#include<d3d12.h>
-#include"DirectXCommon.h"
-#include<DirectXMath.h>
-#include"Texture.h"
-
-
-
-struct VertexPosUv {
-	DirectX::XMFLOAT3 pos;	//xyz座標
-	DirectX::XMFLOAT2 uv;	//uv座標
-};
-
-struct ConstBufferData {
-	DirectX::XMFLOAT4 color;
-	DirectX::XMMATRIX mat;
-};
+#include "d3dx12.h"
+#include "DirectXMath.h"
+#include "array"
+#include "DirectXTex.h"
+#include "vector"
 
 class SpriteManager
 {
-private:
-	SpriteManager();
-	~SpriteManager();
-	
+private:	//エイリアス
+	//Microsoft::WRL::を省略
+	template<class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
+	//DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+
+public:	 //定数
+	//SRVの最大個数
+	static const size_t kMaxSrvCount = 2056;
+
+public:	//メンバ関数
+	void Initialize();
+	void LoadFile(int number, const wchar_t* fileName);
+	void SetTextureCommand(int number);
+
+public:	//ゲッター
+	ID3D12Resource* GetTextureBuff(int number) { return textureBuff[number].Get(); }
+	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap.Get(); }
+
 public:
-	//コピーコンストラクタ無効
-	SpriteManager(const SpriteManager& obj) = delete;
-	//代入演算子を無効
-	SpriteManager& operator=(const SpriteManager& obj) = delete;
+	static void SetDevice(ID3D12Device* device) { SpriteManager::device = device; }
 
-	//インスタンスアクセス専用関数
-	static SpriteManager* GetInstance();
-	
-	static std::string defaultTextureDirectoryPath;
-	DirectXCommon* directX = nullptr;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;		//パイプラインステート
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;		//ルートシグネチャ
+private:	//静的メンバ変数
+	//デバイス
+	static ID3D12Device* device;
 
-	DirectX::XMMATRIX matProjection{};//射影行列
-
-
-public:
-	//初期化
-	void Initialize(DirectXCommon* directX,int windowWidth,int windowHeight);
-
-	//描画前処理
-	void beginDraw();
-
-	/// <summary>
-	/// テクスチャコマンドの発行
-	/// </summary>
-	/// <param name="dev"></param>
-	void SetTextureCommand(uint32_t index);
-
-	//指定番号のテクスチャバッファを取得
-	ID3D12Resource* GetTextureBuffer(uint32_t index)const { return Texture::texBuffuers[index].Get(); }
-
-	//ポストエフェクト用
-	void PostEffectBeginDraw();
-	void PostEffectSetTextureCommand(uint32_t index);
-
-private:
-	//スプライト用パイプラインステートとルートシグネチャの生成
-	void CreatePipeline2D(ID3D12Device* dev);
+private:	//メンバ変数
+	//テクスチャバッファ
+	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSrvCount>textureBuff;
+	//デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> srvHeap;
+	std::vector<DirectX::TexMetadata> metadata;
+	std::vector<DirectX::ScratchImage> scratchImg;
 };
 
