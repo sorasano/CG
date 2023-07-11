@@ -5,6 +5,8 @@
 #include "DirectXTex.h"
 #include "vector"
 
+#include "Input.h"
+
 class PostEffect
 {
 private:	//エイリアス
@@ -55,6 +57,7 @@ public:	//メンバ関数
 
 public:	//静的メンバ関数
 	static void SetDevice(ID3D12Device* device) { PostEffect::device = device; }
+	void SetInput(Input* input) { PostEffect::input_ = input; }
 
 public:	//セッター
 	//アルファ値
@@ -78,6 +81,8 @@ private:	//静的メンバ変数
 	//画面クリアカラー
 	static const float clearColor[4];
 
+	Input* input_;
+
 private:	//メンバ変数
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView;
@@ -93,7 +98,7 @@ private:	//メンバ変数
 	//テクスチャの色
 	XMFLOAT4 color = { 1,1,1,1 };
 	//テクスチャバッファ
-	ComPtr<ID3D12Resource>textureBuff;
+	ComPtr<ID3D12Resource>textureBuff[2];
 	//デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> srvHeap;
 

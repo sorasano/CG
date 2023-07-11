@@ -108,11 +108,11 @@
     <ClCompile Include="fbx\FbxModel.cpp">
       <Filter>ソース ファイル\fbx</Filter>
     </ClCompile>
-    <ClCompile Include="fbx\FbxObject3d.cpp">
-      <Filter>ソース ファイル\fbx</Filter>
-    </ClCompile>
     <ClCompile Include="2d\PostEffect.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="fbx\FbxObject3d.cpp">
+      <Filter>ソース ファイル\fbx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

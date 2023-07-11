@@ -47,9 +47,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	//ポストエフェクト
 	PostEffect* postEffect = nullptr;
 	PostEffect::SetDevice(dxCommon->GetDevice());
+
 	postEffect = new PostEffect;
 	postEffect->Initialize();
 	postEffect->CreateGraphicsPipeLine();
+	postEffect->SetInput(input);
 
 	//fbxLoadr汎用初期化
 	FbxLoader::GetInstance()->Initialize(dxCommon->GetDevice());
