@@ -79,6 +79,7 @@ x64/*/*.obj
 *.iobj
 *.pch
 *.pdb
+x64/*/*.pdb
 *.ipdb
 *.pgc
 *.pgd
