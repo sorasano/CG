@@ -1,5 +1,37 @@
-﻿  PostEffect.cpp
-  main.cpp
-C:\Users\bigsk\source\repos\CG2\Model.h(77,45): warning C4267: 'return': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  コードを生成中...
+﻿C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+  compilation object save succeeded; see C:\Users\bigsk\source\repos\CG2\x64\Debug\PostEffectTestPS.cso
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+C:\Users\bigsk\source\repos\CG2\Resources\shaders\PostEffectTestPS.hlsl(27,14-79): warning X3570: gradient instruction used in a loop with varying iteration, attempting to unroll the loop
+  
   CG2.vcxproj -> C:\Users\bigsk\source\repos\CG2\x64\Debug\CG2.exe

@@ -31,7 +31,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input_)
 	camera->Initialize(eye, target, up, input_);
 
 	camera->SetTarget({0,0,0});
-	camera->SetEye({ 30,0,0 });
+	camera->SetEye({ 13,5,0 });
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon->GetDevice());
